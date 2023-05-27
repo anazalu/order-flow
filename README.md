@@ -6,7 +6,7 @@ Development (backend):
 - create a database with 2-3 tables (like, CUSTOMERS, PRODUCTS, ORDERS)
 - set up Python Django in the test environment (see the instruction below)
 - connect to the database
-- write some backend code that hadnles GET and POST requests
+- write some backend code that handles GET and POST requests
 
 Development (frontend):
 - the frontend consumes the REST API and renders a basic web interface
