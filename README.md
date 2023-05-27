@@ -1,30 +1,41 @@
 # OrderFlow
-This is a web project with Linux, MySQL and Python Django on backend. The server exposes a REST API that is consumed by web frontend (React). The project's source code is stored in a GitHub repository. The project needs 1 backend developer (Python/Django), 1 frontend developer (JavaScript/React), 1 test engineer with test automation skills (Python/pytest/Selenium).
+
+## Overview
+
+This is a web project with Linux, MySQL and Python Django on backend. The server exposes a REST API that is consumed by web frontend (React). The project's source code is stored in a GitHub repository.
+
+## Roles
+
+The project needs 1 backend developer (Python/Django), 1 frontend developer (JavaScript/React), 1 test engineer with test automation skills (Python/pytest/Selenium).
+
+## Tasks
 
 Development (backend):
-- set up MySQL in the test environment
-- create a database with 2-3 tables (like, CUSTOMERS, PRODUCTS, ORDERS)
-- set up Python Django in the test environment (see the instruction below)
-- connect to the database
-- write some backend code that handles GET and POST requests
+- ~~Set up a GitHub repo.~~
+- Set up MySQL. Create a Docker image based on a MySQL image. The new image should run an SQL script that creates a database with 2-3 tables (CUSTOMERS, PRODUCTS, ORDERS).
+- Set up Python Django (see the instruction below).
+- Write some backend code that connects to the database and handles GET and POST requests:
+    - List products.
+    - Place an order.
 
 Development (frontend):
-- the frontend consumes the REST API and renders a basic web interface
-- available actions: list products, place an order
+- The frontend consumes the REST API and renders a basic web interface.
 
 Testing:
-- backend, manual
-- backend, automated (pytest)
-- API, manual (Postman)
-- API, automated (?)
-- web, manual
-- web, automated (Selenium)
+- Backend, manual.
+- Backend, automated (pytest).
+- API, manual (Postman).
+- API, automated (?).
+- Web, manual.
+- Web, automated (Selenium).
 
 The project needs further refinement to create stories and start development.
 
+## Architecture
 
+The backend is implemented as two servers, database and application, that run as two Docker containers (may use Docker Compose).
 
-ChatGPT: How to write a REST API in Python Django?
+## ChatGPT: How to write a REST API in Python Django?
 
 To write a REST API in Python using the Django framework, you can follow these steps:
 
@@ -57,3 +68,23 @@ Step 6: Run the Django development server
 2. Visit the URL shown in the console to access your API (e.g., `http://localhost:8000/myapp/`).
 
 These steps provide a basic structure for creating a REST API in Python using Django. You can further enhance your API by adding authentication, serializers, permissions, and more using the Django REST framework (DRF), which provides additional features and tools for building robust APIs.
+
+## Some Useful Commands
+
+### Git
+```
+git add create_db.sql
+git status
+git pull
+git commit -am "make some changes"
+```
+### Docker
+```
+docker ps
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=password -d mysql:8
+docker exec -it bf45a21c51a1 sh
+```
+### MySQL
+```
+mysql -p orderflowDB
+```
