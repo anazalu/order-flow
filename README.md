@@ -77,8 +77,9 @@ git add create_db.sql
 git status
 git pull
 git commit -am "make some changes"
-git branch -a
+git checkout feature/DEV-01 
 git fetch
+git branch -a | grep DEV
 ```
 ### Docker
 ```
@@ -89,4 +90,7 @@ docker exec -it bf45a21c51a1 sh
 ### MySQL
 ```
 mysql -p orderflowDB
+show databases;
+SELECT o.order_id, c.last_name, p.product_name, p.price, o.quantity FROM ((orders o INNER JOIN customers c ON o.customer_id = c.customer_id) INNER JOIN products p ON o.product_id = p.product_id) ORDER BY 
+o.order_id;
 ```
