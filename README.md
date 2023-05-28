@@ -80,6 +80,13 @@ git commit -am "make some changes"
 git checkout feature/DEV-01 
 git fetch
 git branch -a | grep DEV
+
+git checkout main
+git pull
+git merge feature/DEV-01 
+git add README.md
+git merge --continue
+git push
 ```
 ### Docker
 ```
