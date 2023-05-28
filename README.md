@@ -77,6 +77,8 @@ git add create_db.sql
 git status
 git pull
 git commit -am "make some changes"
+git branch -a
+git fetch
 ```
 ### Docker
 ```
