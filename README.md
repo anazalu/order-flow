@@ -12,7 +12,7 @@ The project needs 1 backend developer (Python/Django), 1 frontend developer (Jav
 
 Development (backend):
 - ~~Set up a GitHub repo.~~
-- Set up MySQL. Create a Docker image based on a MySQL image. The new image should run an SQL script that creates a database with 2-3 tables (CUSTOMERS, PRODUCTS, ORDERS).
+- ~~Set up MySQL. Create a Docker image based on a MySQL image. The new image should run an SQL script that creates a database with 2-3 tables (CUSTOMERS, PRODUCTS, ORDERS).~~
 - Set up Python Django (see the instruction below).
 - Write some backend code that connects to the database and handles GET and POST requests:
     - List products.
@@ -90,14 +90,19 @@ git push
 ```
 ### Docker
 ```
+docker image ls
 docker ps
-docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=password -d mysql:8
-docker exec -it bf45a21c51a1 sh
+docker run --name my-mysql-container -d my-mysql-image
+docker exec -it b48d0f8d3443 sh
+exit
 ```
 ### MySQL
 ```
-mysql -p orderflowDB
+mysql -p orderflow_db
 show databases;
+use orderflow_db;
+show tables;
 SELECT o.order_id, c.last_name, p.product_name, p.price, o.quantity FROM ((orders o INNER JOIN customers c ON o.customer_id = c.customer_id) INNER JOIN products p ON o.product_id = p.product_id) ORDER BY 
 o.order_id;
+quit
 ```
