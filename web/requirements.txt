@@ -1,0 +1,8 @@
+Django>=3.0,<4.0
+psycopg2>=2.8
+
+# # Django Cors Headers - Used to enable CORS headers in API responses, and allow requests to be made to your API server from other origins.
+# django-cors-headers==3.5.0
+
+# # Django Rest Framework - Used to design API logic
+# djangorestframework==3.12.2

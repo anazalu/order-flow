@@ -13,7 +13,7 @@ The project needs 1 backend developer (Python/Django), 1 frontend developer (Jav
 Development (backend):
 - ~~Set up a GitHub repo.~~
 - ~~Set up MySQL. Create a Docker image based on a MySQL image. The new image should run an SQL script that creates a database with 2-3 tables (CUSTOMERS, PRODUCTS, ORDERS).~~
-- Set up Python Django (see the instruction below).
+- ~~Set up Python Django (see the instruction below).~~
 - Write some backend code that connects to the database and handles GET and POST requests:
     - List products.
     - Place an order.
@@ -73,6 +73,7 @@ These steps provide a basic structure for creating a REST API in Python using Dj
 
 ### Git
 ```
+git log --oneline
 git add create_db.sql
 git status
 git pull
@@ -80,6 +81,9 @@ git commit -am "make some changes"
 git checkout feature/DEV-01 
 git fetch
 git branch -a | grep DEV
+git stash
+git stash pop
+git reset --hard origin/feature/DEV-o2
 
 git checkout main
 git pull
@@ -89,7 +93,7 @@ git merge --continue
 git push
 ```
 ### Docker
-```
+```doc
 docker image ls
 docker ps
 docker run --name my-mysql-container -d my-mysql-image
