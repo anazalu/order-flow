@@ -69,20 +69,17 @@ git merge --continue
 git push
 ```
 ### Docker
-```doc
+```
 docker image ls
 docker ps
 docker run --name my-mysql-container -d my-mysql-image
-docker exec -it b48d0f8d3443 sh
-exit
+docker exec -it 22e79424cbac sh
+docker compose up
 ```
-### MySQL
+### Postgres
 ```
-mysql -p orderflow_db
-show databases;
-use orderflow_db;
-show tables;
+psql -U postgres
 SELECT o.order_id, c.last_name, p.product_name, p.price, o.quantity FROM ((orders o INNER JOIN customers c ON o.customer_id = c.customer_id) INNER JOIN products p ON o.product_id = p.product_id) ORDER BY 
 o.order_id;
-quit
+\q
 ```
