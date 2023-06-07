@@ -8,11 +8,11 @@ CREATE TABLE customers (
     email varchar(255) NOT NULL
 );
 
-INSERT INTO customers (customer_id, last_name, email) VALUES (1, 'Jones', 'jones@yahoo.com'); 
-INSERT INTO customers (customer_id, last_name, email) VALUES (2, 'Bell', 'bell@yahoo.com'); 
-INSERT INTO customers (customer_id, last_name, email) VALUES (3, 'Donne', 'donne@yahoo.com'); 
-INSERT INTO customers (customer_id, last_name, email) VALUES (4, 'Blake', 'blake@yahoo.com'); 
-INSERT INTO customers (customer_id, last_name, email) VALUES (5, 'Frost', 'frost@yahoo.com'); 
+INSERT INTO customers (last_name, email) VALUES ('Jones', 'jones@yahoo.com'); 
+INSERT INTO customers (last_name, email) VALUES ('Bell', 'bell@yahoo.com'); 
+INSERT INTO customers (last_name, email) VALUES ('Donne', 'donne@yahoo.com'); 
+INSERT INTO customers (last_name, email) VALUES ('Blake', 'blake@yahoo.com'); 
+INSERT INTO customers (last_name, email) VALUES ('Frost', 'frost@yahoo.com'); 
 
 CREATE TABLE products (
     product_id serial PRIMARY KEY,
@@ -20,24 +20,37 @@ CREATE TABLE products (
     price int NOT NULL
 );
 
-INSERT INTO products (product_id, product_name, price) VALUES (1, 'Book', 55);
-INSERT INTO products (product_id, product_name, price) VALUES (2, 'Doll', 58); 
-INSERT INTO products (product_id, product_name, price) VALUES (3, 'Car', 1300); 
-INSERT INTO products (product_id, product_name, price) VALUES (4, 'Phone', 55); 
+INSERT INTO products (product_name, price) VALUES ('House', 23455);
+INSERT INTO products (product_name, price) VALUES ('Book', 55);
+INSERT INTO products (product_name, price) VALUES ('Doll', 58); 
+INSERT INTO products (product_name, price) VALUES ('Car', 1300); 
+INSERT INTO products (product_name, price) VALUES ('Phone', 55); 
 
 CREATE TABLE orders (
-    order_id int NOT NULL,
+    order_id serial PRIMARY KEY,
     customer_id int NOT NULL,
-    product_id int NOT NULL,
-    quantity int NOT NULL,
-    CONSTRAINT pk_orders PRIMARY KEY (order_id, customer_id, product_id),
-    CONSTRAINT fk_customers_orders FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
-    CONSTRAINT fk_products_orders FOREIGN KEY (product_id) REFERENCES products(product_id)
+    stage varchar(16) NOT NULL,
+    CONSTRAINT fk_customers_orders FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 );
 
-INSERT INTO orders (order_id, customer_id, product_id, quantity) VALUES (1, 3, 4, 10); 
-INSERT INTO orders (order_id, customer_id, product_id, quantity) VALUES (2, 3, 4, 5); 
-INSERT INTO orders (order_id, customer_id, product_id, quantity) VALUES (2, 3, 2, 2); 
-INSERT INTO orders (order_id, customer_id, product_id, quantity) VALUES (4, 1, 3, 1); 
-INSERT INTO orders (order_id, customer_id, product_id, quantity) VALUES (5, 5, 1, 1); 
-INSERT INTO orders (order_id, customer_id, product_id, quantity) VALUES (6, 2, 2, 40);
+INSERT INTO orders (customer_id, stage) VALUES (3, 'paid'); 
+INSERT INTO orders (customer_id, stage) VALUES (1, 'placed'); 
+INSERT INTO orders (customer_id, stage) VALUES (2, 'delivered'); 
+
+CREATE TABLE items (
+    item_id serial PRIMARY KEY,
+    order_id int NOT NULL,
+    product_id int NOT NULL,
+    quantity int NOT NULL,
+    CONSTRAINT fk_orders_items FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    CONSTRAINT fk_products_items FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+INSERT INTO items (order_id, product_id, quantity) VALUES (3, 4, 1); 
+INSERT INTO items (order_id, product_id, quantity) VALUES (2, 3, 2); 
+INSERT INTO items (order_id, product_id, quantity) VALUES (2, 3, 10); 
+INSERT INTO items (order_id, product_id, quantity) VALUES (3, 4, 6); 
+INSERT INTO items (order_id, product_id, quantity) VALUES (1, 2, 5); 
+INSERT INTO items (order_id, product_id, quantity) VALUES (1, 1, 1); 
+INSERT INTO items (order_id, product_id, quantity) VALUES (1, 5, 1); 
+INSERT INTO items (order_id, product_id, quantity) VALUES (3, 2, 2); 
