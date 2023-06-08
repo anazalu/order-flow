@@ -44,3 +44,17 @@ def order_list(request):
         order = Order.objects.create(order_id=order_id, customer_id=customer_id, stage=stage)
         return JsonResponse({'message': 'Order created successfully.'})
     
+@csrf_exempt
+def item_list(request):
+    if request.method == 'GET':
+        items = Item.objects.all()
+        item_data = [{'item_id': item.item_id, 'order_id': item.order_id, 'product_id': item.product_id, 'quantity': item.quantity} for item in items]
+        return JsonResponse({'items': item_data})
+    elif request.method == 'POST':
+        item_id = request.POST.get('item_id')
+        order_id = request.POST.get('order_id')
+        product_id = request.POST.get('product_id')
+        quantity = request.POST.get('quantity')
+        item = Item.objects.create(item_id=item_id, order_id=order_id, product_id=product_id, quantity=quantity)
+        return JsonResponse({'message': 'Item created successfully.'})
+    
