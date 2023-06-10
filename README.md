@@ -27,6 +27,7 @@ To test the endpoints, you can send GET and POST requests to /books/. For exampl
 GET request: curl http://localhost:8000/books/
 POST request: curl -X POST -d "title=New Book&author=John Doe&publication_date=2023-01-01" http://localhost:8000/books/
 
+https://www.section.io/engineering-education/dockerized-django-application-with-github-actions/
 
 - Backend, manual.
 - Backend, automated (pytest).
