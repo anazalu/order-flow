@@ -1,5 +1,5 @@
 from django.urls import reverse, resolve
-from django.urls import path
+# from django.urls import path
 
 class TestUrls: 
 # here, you are checking if the path's view name is content
