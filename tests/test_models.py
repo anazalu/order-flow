@@ -1,5 +1,5 @@
 import pytest
-from ..web.orderapi.models import Customer
+from orderapi.models import Customer
 
 
 @pytest.mark.django_db
