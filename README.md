@@ -14,9 +14,14 @@ Development (backend):
 - ~~Set up a GitHub repo.~~
 - ~~Set up MySQL. Create a Docker image based on a MySQL image. The new image should run an SQL script that creates a database with 2-3 tables (CUSTOMERS, PRODUCTS, ORDERS).~~
 - ~~Set up Python Django (see the instruction below).~~
-- Write some backend code that connects to the database and handles GET and POST requests:
-    - List products.
-    - Place an order.
+- ~~Write some backend code that connects to the database and handles GET and POST requests:~~
+    ~~- List products~~
+    ~~- Place an order~~
+- implement web frontend
+    - main layout
+    - product cards
+    - cart items
+- serve product pictures (large and small) from the web server
 
 Development (frontend):
 - The frontend consumes the REST API and renders a basic web interface.
