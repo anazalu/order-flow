@@ -45,7 +45,7 @@ The project needs further refinement to create stories and start development.
 
 ## Architecture
 
-The backend is implemented as two servers, database and application, that run as two Docker containers (may use Docker Compose).
+The backend is implemented as two servers, database and application, that run as two Docker containers (uses Docker Compose).
 
 ## Some Useful Commands
 

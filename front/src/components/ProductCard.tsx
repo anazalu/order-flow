@@ -8,9 +8,13 @@ interface Product {
 
 interface ProductCardProps {
     product: Product;
+    addToCart: (productId: number) => void;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, addToCart }: ProductCardProps) {
+    const handleAddToCart = () => {
+        addToCart(product.product_id);
+    };
 
     return (
         <Card key={product.product_id} style={{ margin: '1rem' }}>
@@ -25,7 +29,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={handleAddToCart}>
                     Add to cart
                 </Button>
             </CardActions>

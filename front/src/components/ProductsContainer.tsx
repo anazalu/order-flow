@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardActions, Typography, Button } from '@mui/material';
 import ProductCard from "./ProductCard";
 
@@ -14,9 +14,17 @@ export default function ProductsContainer() {
 
     const { isLoading, isError, data, error, refetch } = useQuery<Product[]>(["products"], (): Promise<Product[]> =>
         axios
-            .get("http://localhost:8000/products/")
+            .get("http://localhost:8000/api/products/")
             .then((res) => res.data.products)
     );
+
+    const addToCartMutation = useMutation((productId: number) =>
+        axios.post('http://localhost:8000/api/items', { product_id: productId, quantity: 1 })
+    );
+
+    const handleAddToCart = (productId: number) => {
+        addToCartMutation.mutate(productId);
+    };
 
     if (isLoading) return (
         <>
@@ -37,7 +45,11 @@ export default function ProductsContainer() {
             <div>
                 <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     {data?.map((product) => (
-                        <ProductCard key={product.product_id} product={product} />
+                        <ProductCard
+                            key={product.product_id}
+                            product={product}
+                            addToCart={() => handleAddToCart(product.product_id)}
+                        />
                     ))}
                 </div>
             </div>

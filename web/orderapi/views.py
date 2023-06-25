@@ -1,60 +1,50 @@
-from django.shortcuts import render
+from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Product, User, Order, CartItem
+from .serializers import ProductSerializer, UserSerializer, OrderSerializer, CartItemSerializer
 
-# Create your views here.
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from .models import Customer, Product, Order, Item
+class UserRegistrationView(APIView):
+    authentication_classes = []  # Disable authentication
+    permission_classes = [AllowAny]  # Allow any user to access the endpoint
 
-@csrf_exempt
-def customer_list(request):
-    if request.method == 'GET':
-        customers = Customer.objects.all()
-        customer_data = [{'customer_id': customer.customer_id, 'last_name': customer.last_name, 'email ': customer.email} for customer in customers]
-        return JsonResponse({'customers': customer_data})
-    elif request.method == 'POST':
-        customer_id = request.POST.get('customer_id')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        customer = Customer.objects.create(customer_id=customer_id, last_name=last_name, email=email)
-        return JsonResponse({'message': 'Customer created successfully.'})
-      
-@csrf_exempt
-def product_list(request):
-    if request.method == 'GET':
-        products = Product.objects.all()
-        product_data = [{'product_id': product.product_id, 'product_name': product.product_name, 'price': product.price} for product in products]
-        return JsonResponse({'products': product_data})
-    elif request.method == 'POST':
-        product_id = request.POST.get('product_id')
-        product_name = request.POST.get('product_name')
-        price = request.POST.get('price')
-        product = Product.objects.create(product_id=product_id, product_name=product_name, price=price)
-        return JsonResponse({'message': 'Product created successfully.'})
-    
-@csrf_exempt
-def order_list(request):
-    if request.method == 'GET':
-        orders = Order.objects.all()
-        order_data = [{'order_id': order.order_id, 'customer_id': order.customer_id, 'stage': order.stage} for order in orders]
-        return JsonResponse({'orders': order_data})
-    elif request.method == 'POST':
-        order_id = request.POST.get('order_id')
-        customer_id = request.POST.get('customer_id')
-        stage = request.POST.get('stage')
-        order = Order.objects.create(order_id=order_id, customer_id=customer_id, stage=stage)
-        return JsonResponse({'message': 'Order created successfully.'})
-    
-@csrf_exempt
-def item_list(request):
-    if request.method == 'GET':
-        items = Item.objects.all()
-        item_data = [{'item_id': item.item_id, 'order_id': item.order_id, 'product_id': item.product_id, 'quantity': item.quantity} for item in items]
-        return JsonResponse({'items': item_data})
-    elif request.method == 'POST':
-        item_id = request.POST.get('item_id')
-        order_id = request.POST.get('order_id')
-        product_id = request.POST.get('product_id')
-        quantity = request.POST.get('quantity')
-        item = Item.objects.create(item_id=item_id, order_id=order_id, product_id=product_id, quantity=quantity)
-        return JsonResponse({'message': 'Item created successfully.'})
-    
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ProductList(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class ProductDetail(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class OrderList(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+class CartItemCreate(generics.CreateAPIView):
+    queryset = CartItem.objects.all()
+    serializer_class = CartItemSerializer
+
+class CartItemDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CartItem.objects.all()
+    serializer_class = CartItemSerializer

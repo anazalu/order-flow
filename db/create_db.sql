@@ -2,55 +2,54 @@ CREATE DATABASE orderflow_db;
 
 \c orderflow_db;
 
-CREATE TABLE customers (
-    customer_id serial PRIMARY KEY,
-    last_name varchar(255) NOT NULL,
-    email varchar(255) NOT NULL
+CREATE TABLE Products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  price DECIMAL(8, 2) NOT NULL,
+  image_url VARCHAR(255),
+  description TEXT
 );
 
-INSERT INTO customers (last_name, email) VALUES ('Jones', 'jones@yahoo.com'); 
-INSERT INTO customers (last_name, email) VALUES ('Bell', 'bell@yahoo.com'); 
-INSERT INTO customers (last_name, email) VALUES ('Donne', 'donne@yahoo.com'); 
-INSERT INTO customers (last_name, email) VALUES ('Blake', 'blake@yahoo.com'); 
-INSERT INTO customers (last_name, email) VALUES ('Frost', 'frost@yahoo.com'); 
-
-CREATE TABLE products (
-    product_id serial PRIMARY KEY,
-    product_name varchar(255) NOT NULL,
-    price int NOT NULL
+CREATE TABLE Users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
 );
 
-INSERT INTO products (product_name, price) VALUES ('House', 23455);
-INSERT INTO products (product_name, price) VALUES ('Book', 55);
-INSERT INTO products (product_name, price) VALUES ('Doll', 58); 
-INSERT INTO products (product_name, price) VALUES ('Car', 1300); 
-INSERT INTO products (product_name, price) VALUES ('Phone', 55); 
-
-CREATE TABLE orders (
-    order_id serial PRIMARY KEY,
-    customer_id int NOT NULL,
-    stage varchar(16) NOT NULL,
-    CONSTRAINT fk_customers_orders FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+CREATE TABLE Orders (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES Users(id),
+  status VARCHAR(255),
+  created_at TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO orders (customer_id, stage) VALUES (3, 'paid'); 
-INSERT INTO orders (customer_id, stage) VALUES (1, 'placed'); 
-INSERT INTO orders (customer_id, stage) VALUES (2, 'delivered'); 
-
-CREATE TABLE items (
-    item_id serial PRIMARY KEY,
-    order_id int NOT NULL,
-    product_id int NOT NULL,
-    quantity int NOT NULL,
-    CONSTRAINT fk_orders_items FOREIGN KEY (order_id) REFERENCES orders(order_id),
-    CONSTRAINT fk_products_items FOREIGN KEY (product_id) REFERENCES products(product_id)
+CREATE TABLE OrderItems (
+  id SERIAL PRIMARY KEY,
+  order_id INTEGER REFERENCES Orders(id),
+  product_id INTEGER REFERENCES Products(id),
+  quantity INTEGER
 );
 
-INSERT INTO items (order_id, product_id, quantity) VALUES (3, 4, 1); 
-INSERT INTO items (order_id, product_id, quantity) VALUES (2, 3, 2); 
-INSERT INTO items (order_id, product_id, quantity) VALUES (2, 3, 10); 
-INSERT INTO items (order_id, product_id, quantity) VALUES (3, 4, 6); 
-INSERT INTO items (order_id, product_id, quantity) VALUES (1, 2, 5); 
-INSERT INTO items (order_id, product_id, quantity) VALUES (1, 1, 1); 
-INSERT INTO items (order_id, product_id, quantity) VALUES (1, 5, 1); 
-INSERT INTO items (order_id, product_id, quantity) VALUES (3, 2, 2); 
+INSERT INTO Products (name, price, image_url, description)
+VALUES
+  ('Product 1', 10.99, 'https://example.com/product1.jpg', 'Description of Product 1'),
+  ('Product 2', 19.99, 'https://example.com/product2.jpg', 'Description of Product 2'),
+  ('Product 3', 7.99, 'https://example.com/product3.jpg', 'Description of Product 3');
+
+INSERT INTO Users (username, email, password)
+VALUES
+  ('user1', 'user1@example.com', 'password1'),
+  ('user2', 'user2@example.com', 'password2');
+
+INSERT INTO Orders (user_id, status)
+VALUES
+  (1, 'new'),
+  (1, 'submitted'),
+  (2, 'new');
+
+INSERT INTO OrderItems (order_id, product_id, quantity)
+VALUES
+  (1, 1, 2),
+  (1, 2, 1),
+  (2, 3, 3);

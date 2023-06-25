@@ -15,7 +15,7 @@ export default function CartItemsContainer() {
 
   const { isLoading, isError, data, error, refetch } = useQuery<Item[]>(["items"], (): Promise<Item[]> =>
     axios
-      .get("http://localhost:8000/items/")
+      .get("http://localhost:8000/api/items/")
       .then((res) => res.data.items)
   );
 

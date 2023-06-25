@@ -15,12 +15,19 @@ Including another URLconf
 """
 # from django.contrib import admin
 from django.urls import path
-from orderapi.views import customer_list, product_list, order_list, item_list
+from orderapi import views
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
-    path('customers/', customer_list, name='customer-list'),
-    path('products/', product_list, name='product-list'),
-    path('orders/', order_list, name='order-list'),
-    path('items/', item_list, name='item-list')
+    path('api/products/', views.ProductList.as_view(), name='product-list'),
+    path('api/products/<int:pk>/', views.ProductDetail.as_view(), name='product-detail'),
+    path('api/users/', views.UserList.as_view(), name='user-list'),
+    path('api/users/<int:pk>/', views.UserDetail.as_view(), name='user-detail'),
+    path('api/orders/', views.OrderList.as_view(), name='order-list'),
+    path('api/orders/<int:pk>/', views.OrderDetail.as_view(), name='order-detail'),
+    path('api/cart/items/', views.CartItemCreate.as_view(), name='cart-item-create'),
+    path('api/cart/items/<int:pk>/', views.CartItemDetail.as_view(), name='cart-item-detail'),
+    path('api/register/', views.UserRegistrationView.as_view(), name='user-registration'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh')
 ]
