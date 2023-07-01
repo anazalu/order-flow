@@ -37,6 +37,15 @@ https://www.section.io/engineering-education/dockerized-django-application-with-
 - Backend, manual.
 - Backend, automated (pytest).
 - API, manual (Postman).
+    - /api/products/ GET
+    - /api/products/1/ GET
+    - /api/orders/ GET POST
+    - /api/orders/1/ GET PUT DELETE
+    - /api/cart/items/ POST
+    - /api/cart/items/1/  GET PUT DELETE
+    - /api/register/ POST
+    - /api/token/ POST
+    - /api/token/refresh/ POST
 - API, automated (?).
 - Web, manual.
 - Web, automated (Selenium).
@@ -96,6 +105,8 @@ psql -U postgres -d orderflow_db
 SELECT o.order_id, c.last_name, p.product_name, p.price, o.quantity FROM ((orders o INNER JOIN customers c ON o.customer_id = c.customer_id) INNER JOIN products p ON o.product_id = p.product_id) ORDER BY 
 o.order_id;
 \q
+\dt
+\d orders
 ```
 ### Django
 ```

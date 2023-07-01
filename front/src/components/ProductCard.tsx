@@ -1,10 +1,5 @@
 import { Card, CardContent, CardActions, Typography, Button } from '@mui/material';
-
-interface Product {
-    product_id: number;
-    product_name: string;
-    price: number;
-}
+import { Product } from '../types'
 
 interface ProductCardProps {
     product: Product;
@@ -13,19 +8,19 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, addToCart }: ProductCardProps) {
     const handleAddToCart = () => {
-        addToCart(product.product_id);
+        addToCart(product.id);
     };
 
     return (
-        <Card key={product.product_id} style={{ margin: '1rem' }}>
+        <Card key={product.id} style={{ margin: '1rem' }}>
             {/* <img src={product.imageUrl} alt={product.product_name} style={{ height: 200, objectFit: 'cover' }} /> */}
-            <img src='https://media.cnn.com/api/v1/images/stellar/prod/120604032828-fresh-ripe-bananas.jpg?q=x_0,y_106,h_2019,w_3590,c_crop/h_720,w_1280/f_webp' alt={product.product_name} style={{ height: 200, objectFit: 'cover' }} />
+            <img src='https://media.cnn.com/api/v1/images/stellar/prod/120604032828-fresh-ripe-bananas.jpg?q=x_0,y_106,h_2019,w_3590,c_crop/h_720,w_1280/f_webp' alt={product.name} style={{ height: 200, objectFit: 'cover' }} />
             <CardContent>
                 <Typography variant="h6" component="div">
-                    {product.product_name}
+                    {product.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Price: ${product.price}
+                    Price: {product.price}
                 </Typography>
             </CardContent>
             <CardActions>

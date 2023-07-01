@@ -10,16 +10,16 @@ CREATE TABLE Products (
   description TEXT
 );
 
-CREATE TABLE Users (
-  id SERIAL PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL
-);
+-- CREATE TABLE Users (
+--   id SERIAL PRIMARY KEY,
+--   username VARCHAR(255) NOT NULL,
+--   email VARCHAR(255) NOT NULL,
+--   password VARCHAR(255) NOT NULL
+-- );
 
 CREATE TABLE Orders (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES Users(id),
+  user_id INTEGER NOT NULL, -- REFERENCES Users(id),
   status VARCHAR(255),
   created_at TIMESTAMP DEFAULT NOW()
 );
@@ -37,10 +37,10 @@ VALUES
   ('Product 2', 19.99, 'https://example.com/product2.jpg', 'Description of Product 2'),
   ('Product 3', 7.99, 'https://example.com/product3.jpg', 'Description of Product 3');
 
-INSERT INTO Users (username, email, password)
-VALUES
-  ('user1', 'user1@example.com', 'password1'),
-  ('user2', 'user2@example.com', 'password2');
+-- INSERT INTO Users (username, email, password)
+-- VALUES
+--   ('user1', 'user1@example.com', 'password1'),
+--   ('user2', 'user2@example.com', 'password2');
 
 INSERT INTO Orders (user_id, status)
 VALUES

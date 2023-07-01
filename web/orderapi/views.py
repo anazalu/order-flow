@@ -1,10 +1,40 @@
+from http.client import NOT_FOUND
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
+import jwt
+from django.shortcuts import get_object_or_404
 from .models import Product, User, Order, CartItem
 from .serializers import ProductSerializer, UserSerializer, OrderSerializer, CartItemSerializer
+
+
+def get_or_create_current_order(token: str) -> int:
+    # decode the JWT token and extract the User ID
+    decoded_token = jwt.decode(token, options={'verify_signature': False})
+    user_id = decoded_token.get('user_id')
+
+    # filter the queryset to include orders only for the User ID
+    queryset = Order.objects.filter(user_id=user_id)
+
+    # if there is an existing order, get the latest order based on the highest order ID
+    if queryset.exists():
+        latest_order_id = queryset.order_by('-id').values_list('id', flat=True).first()
+        return latest_order_id
+
+    # if there is no existing order, create a new order for the user
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        raise NOT_FOUND('User not found')
+    order_data = {
+        'user_id': user,
+        'status': 'new',
+    }
+    order = Order.objects.create(**order_data)
+    return order.id
+
 
 class UserRegistrationView(APIView):
     authentication_classes = []  # Disable authentication
@@ -25,25 +55,30 @@ class ProductDetail(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-class OrderList(generics.ListCreateAPIView):
-    queryset = Order.objects.all()
+class LatestOrder(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
 
-class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+    def get_queryset(self):
+        token = self.request.headers.get('Authorization', '').split(' ')[1]
+        order_id = get_or_create_current_order(token)
+        queryset = Order.objects.filter(id=order_id)
+        return queryset
 
-class CartItemCreate(generics.CreateAPIView):
+class CartItemCreateList(generics.ListCreateAPIView):
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
+    # permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        token = self.request.headers.get('Authorization', '').split(' ')[1]
+        order_id = get_or_create_current_order(token)
+        return CartItem.objects.filter(order_id=order_id)
+    
+    def perform_create(self, serializer):
+        token = self.request.headers.get('Authorization', '').split(' ')[1]
+        order_id = get_or_create_current_order(token)
+        order = Order.objects.get(id=order_id)
+        serializer.save(order_id=order)
 
 class CartItemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = CartItem.objects.all()

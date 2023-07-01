@@ -1,20 +1,28 @@
-import React from 'react';
+import axios from 'axios';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, Typography, Button } from '@mui/material';
-
-interface Item {
-    item_id: number;
-    order_id: number;
-    product_id: number;
-    quantity: number;
-}
+import { Product, Item } from '../types'
 
 interface CartItemProps {
-    item: Item;
+    item: Item | undefined;
     increaseQuantity: () => void;
     decreaseQuantity: () => void;
 }
 
 export default function CartItem({ item, increaseQuantity, decreaseQuantity }: CartItemProps) {
+    const queryClient = useQueryClient();
+    const token = queryClient.getQueryData<string>(['token']);
+
+    const { isLoading, isError, data, error, refetch } = useQuery<Product>(['product'], (): Promise<Product> =>
+        axios
+            .get(`http://localhost:8000/api/products/${item?.product_id}/`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => res.data)
+    );
+
     const handleIncrease = () => {
         increaseQuantity();
     };
@@ -23,21 +31,26 @@ export default function CartItem({ item, increaseQuantity, decreaseQuantity }: C
         decreaseQuantity();
     };
 
+    if (isLoading) return (
+        <>
+            <p>Loading...</p>
+        </>
+    )
+
+    if (error instanceof Error) return (
+        <>
+            <p>{'An error has occurred: ' + error?.message}</p>
+        </>
+    )
+
     return (
         <Card style={{ marginBottom: '1rem' }}>
             {/* <img src={item.imageUrl} alt={item.name} style={{ height: 100, objectFit: 'cover' }} /> */}
-            <img src='https://media.cnn.com/api/v1/images/stellar/prod/120604032828-fresh-ripe-bananas.jpg?q=x_0,y_106,h_2019,w_3590,c_crop/h_720,w_1280/f_webp' alt='alt' style={{ height: 200, objectFit: 'cover' }} />
             <CardContent>
-                <Typography variant="h6" component="div">
-                    {item.item_id}
-                </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Product ID: {item.product_id}
+                    {data?.name} x {item?.quantity} = {(data && item) ? (data.price * item.quantity) : '?'}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Quantity: {item.quantity}
-                </Typography>
-                <Button variant="outlined" onClick={handleDecrease} disabled={item.quantity === 1}>
+                <Button variant="outlined" onClick={handleDecrease} disabled={item?.quantity === 1}>
                     -
                 </Button>
                 <Button variant="outlined" onClick={handleIncrease}>

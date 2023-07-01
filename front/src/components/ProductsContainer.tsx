@@ -1,25 +1,31 @@
 
-import axios from "axios";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import axios from 'axios';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { Card, CardContent, CardActions, Typography, Button } from '@mui/material';
-import ProductCard from "./ProductCard";
-
-interface Product {
-    product_id: number;
-    product_name: string;
-    price: number;
-}
+import { Product } from '../types'
+import ProductCard from './ProductCard';
 
 export default function ProductsContainer() {
+    const queryClient = useQueryClient();
+    const token = queryClient.getQueryData<string>(['token']);
 
-    const { isLoading, isError, data, error, refetch } = useQuery<Product[]>(["products"], (): Promise<Product[]> =>
+    const { isLoading, isError, data, error, refetch } = useQuery<Product[]>(['products'], (): Promise<Product[]> =>
         axios
-            .get("http://localhost:8000/api/products/")
-            .then((res) => res.data.products)
+            .get('http://localhost:8000/api/products/', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => res.data)
     );
 
-    const addToCartMutation = useMutation((productId: number) =>
-        axios.post('http://localhost:8000/api/items', { product_id: productId, quantity: 1 })
+    const addToCartMutation = useMutation((productId: number) => {
+        return axios.post('http://localhost:8000/api/cart/items/', { product_id: productId, quantity: 1 }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+    }
     );
 
     const handleAddToCart = (productId: number) => {
@@ -34,11 +40,9 @@ export default function ProductsContainer() {
 
     if (error instanceof Error) return (
         <>
-            <p>{"An error has occurred: " + error?.message}</p>
+            <p>{'An error has occurred: ' + error?.message}</p>
         </>
     )
-
-    // console.log(data)
 
     return (
         <>
@@ -46,9 +50,9 @@ export default function ProductsContainer() {
                 <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     {data?.map((product) => (
                         <ProductCard
-                            key={product.product_id}
+                            key={product.id}
                             product={product}
-                            addToCart={() => handleAddToCart(product.product_id)}
+                            addToCart={() => handleAddToCart(product.id)}
                         />
                     ))}
                 </div>
