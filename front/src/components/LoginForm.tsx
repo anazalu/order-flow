@@ -1,13 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
-import { Button, TextField, Link } from '@mui/material';
-// import jwtDecode, { JwtPayload } from 'jwt-decode';
-
-// interface JwtPayloadExtended extends JwtPayload {
-//     token_type?: string;
-//     user_id: string;
-// }
+import { Button, TextField, Container, Paper, Typography, Grid } from '@mui/material';
 
 export interface LoginResponse {
     refresh: string;
@@ -37,14 +31,8 @@ export default function LoginForm() {
     const { mutate: loginUser, isLoading } = useMutation(login, {
         onSuccess: (data: AxiosResponse<LoginResponse>) => {
             const accessToken: string = data.data.access;
-            console.log('Token:\n' + accessToken)
-            // const decodedToken: JwtPayloadExtended = jwtDecode<JwtPayloadExtended>(accessToken);
-            // console.log('Decoded token:\n' + decodedToken)
-            // const userId: number = Number(decodedToken.user_id);
-            // console.log('Decoded token:\n' + decodedToken.iss + '\n' + decodedToken.sub + '\n' + decodedToken.aud + '\n' + decodedToken.exp + '\n' + decodedToken.nbf + '\n' + decodedToken.iat + '\n' + decodedToken.jti)
-            // console.log('User ID from the decoded token:\n' + userId)
-            queryClient.setQueryData<string>(['token'], data.data.access);
-            // queryClient.setQueryData<number>(['user_id'], userId);
+            queryClient.setQueryData<string>(['token'], accessToken);
+            queryClient.setQueryData<string>(['username'], username);
         },
     });
 
@@ -53,28 +41,51 @@ export default function LoginForm() {
     };
 
     return (
-        <div>
-            <p>{'(LoginForm) Token cache size: ' + queryClient.getMutationCache().getAll().length}</p>
-            <h2>Login</h2>
-            <TextField
-                label="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <br />
-            <TextField
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <br />
-            <br />
-            <Button variant="contained" color="primary" onClick={handleLogin} disabled={isLoading}>
-                {isLoading ? 'Logging in...' : 'Login'}
-            </Button>
-            <br />
-            <Link href="/registration">Register</Link>
-        </div>
+        <Container maxWidth="xs">
+        <Paper style={{ marginTop: '2rem', padding: '2rem' }} elevation={3}>
+          <Typography variant="h5" gutterBottom>
+            Login
+          </Typography>
+          <form>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  label="Username"
+                  variant="outlined"
+                  fullWidth
+                  style={{ marginBottom: '1rem' }}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Password"
+                  type="password"
+                  variant="outlined"
+                  fullWidth
+                  style={{ marginBottom: '1rem' }}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleLogin}
+                  disabled={false} // Replace with your logic
+                  fullWidth
+                  style={{ marginTop: '1rem' }}
+                >
+                  Login
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </Paper>
+      </Container>
     );
 };
