@@ -56,7 +56,7 @@ jobs:
         npm ci
     - name: Start backend
       run: |
-        export POSTGRES_HOST=postgres
+        export POSTGRES_HOST=localhost
         export POSTGRES_NAME=orderflow_db
         export POSTGRES_USER=postgres
         export POSTGRES_PASSWORD=postgres
