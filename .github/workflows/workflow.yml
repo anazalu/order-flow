@@ -65,7 +65,7 @@ jobs:
         PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -c "CREATE DATABASE $POSTGRES_NAME;"
         cd web
         python manage.py migrate
-        python manage.py runserver 0.0.0.0:8000
+        python manage.py runserver 0.0.0.0:8000 &
     - name: Start frontend
       run: |
         cd front
