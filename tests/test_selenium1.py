@@ -16,7 +16,10 @@ def list_visible_elements(driver):
 
 class TestSelenium:
     def test_login_form(self):
-        driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        # driver = webdriver.Chrome()
+        driver = webdriver.Chrome(options=options) # "path/to/chromedriver.exe",
 
         driver.get("http://localhost:3000/")
 
@@ -24,9 +27,6 @@ class TestSelenium:
         assert title == "React App"
 
         driver.implicitly_wait(0.5)
-
-        # list elements
-        # list_visible_elements(driver)
 
         # LoginForm, Username
         username = driver.find_element(By.ID, "loginform-username")
@@ -36,14 +36,14 @@ class TestSelenium:
         username.send_keys("user10")
         password.send_keys("user10")
 
-        # LoginForm, Login (button)
-        login_button = driver.find_element(by=By.ID, value="loginform-login-button")
-        # login_button.click()
-        driver.execute_script("arguments[0].click();", login_button)
+        # # LoginForm, Login (button)
+        # login_button = driver.find_element(by=By.ID, value="loginform-login-button")
+        # # login_button.click()
+        # driver.execute_script("arguments[0].click();", login_button)
 
-        time.sleep(2)
+        # time.sleep(2)
 
-        # list elements
-        list_visible_elements(driver)
+        # # list elements
+        # list_visible_elements(driver)
 
         driver.quit()
