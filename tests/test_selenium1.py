@@ -18,8 +18,7 @@ class TestSelenium:
     def test_login_form(self):
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
-        # driver = webdriver.Chrome()
-        driver = webdriver.Chrome(options=options) # "path/to/chromedriver.exe",
+        driver = webdriver.Chrome(options=options)
 
         driver.get("http://localhost:3000/")
 

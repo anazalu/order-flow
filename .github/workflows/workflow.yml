@@ -54,6 +54,14 @@ jobs:
       run: |
         cd front
         npm ci
+    - name: Start backend
+      run: |
+        cd web
+        python manage.py runserver
+    - name: Start frontend
+      run: |
+        cd front
+        npm start
     - name: Run Tests
       run: |
         pytest .
