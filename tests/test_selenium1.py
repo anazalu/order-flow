@@ -23,7 +23,7 @@ class TestSelenium:
         driver.get("http://localhost:3000/")
 
         title = driver.title
-        assert title == "React App TEST"
+        assert title == "React App"
 
         driver.implicitly_wait(0.5)
 
