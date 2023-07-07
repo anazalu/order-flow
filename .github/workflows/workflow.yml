@@ -62,7 +62,7 @@ jobs:
         export POSTGRES_PASSWORD=postgres
         sudo apt update
         sudo apt install postgresql-client
-        psql -U "$POSTGRES_USER" -c "CREATE DATABASE $POSTGRES_NAME;"
+        PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -c "CREATE DATABASE $POSTGRES_NAME;"
         cd web
         python manage.py migrate
         python manage.py runserver 0.0.0.0:8000
