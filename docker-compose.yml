@@ -15,6 +15,7 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - POSTGRES_HOST=db
       - POSTGRES_NAME=orderflow_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
