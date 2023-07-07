@@ -78,6 +78,15 @@ class CartItemCreateList(generics.ListCreateAPIView):
         token = self.request.headers.get('Authorization', '').split(' ')[1]
         order_id = get_or_create_current_order(token)
         order = Order.objects.get(id=order_id)
+
+        # Check if an existing cart item with the specified product_id exists
+        product_id = self.request.data.get('product_id')
+        existing_cart_item = CartItem.objects.filter(order_id=order_id, product_id=product_id).first()
+        if existing_cart_item:
+            # Return a response indicating that the cart item already exists
+            return Response({'error': 'Cart item already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # If no existing cart item, create the new cart item
         serializer.save(order_id=order)
 
 class CartItemDetail(generics.RetrieveUpdateDestroyAPIView):

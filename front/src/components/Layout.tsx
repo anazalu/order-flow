@@ -12,17 +12,11 @@ import RegistrationForm from './RegistrationForm';
 export default function Layout() {
   const queryClient = useQueryClient();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const handleSignOut = () => {
-    console.log('handleSignOut()');
-    setIsLoggedIn(false); // update the isLoggedIn state to trigger re-render
-  };
-
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const handleTotalQuantityChange = (quantity: number) => {
-    setTotalQuantity(quantity); // update the totalQuantity state to trigger re-render
-    refetchCartItems();
-  };
+  // const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // const handleSignOut = () => {
+  //   console.log('handleSignOut()');
+  //   setIsLoggedIn(false); // update the isLoggedIn state to trigger re-render
+  // };
 
   const { data: token } = useQuery<string>(['token'], {
     select: (data: string) => data,
@@ -41,24 +35,9 @@ export default function Layout() {
     }
   );
 
-  const { isLoading: isLoadingCartItems, data: dataCartItems, error: errorCartItems, refetch: refetchCartItems } = useQuery<Item[]>(['cartItems'], (): Promise<Item[]> => {
-    return axios
-      .get('http://localhost:8000/api/cart/items/', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => res.data)
-  },
-    {
-      enabled: token !== undefined,
-      cacheTime: 0,
-    }
-  );
-
   return (
     <>
-      <Header handleSignOut={handleSignOut} />
+      <Header />
       {token ? (
         <Grid container spacing={2}>
           <Grid item xs={8}>
@@ -68,7 +47,7 @@ export default function Layout() {
           </Grid>
           <Grid item xs={4}>
             <div style={{ overflow: 'auto', maxHeight: 'calc(100vh - 64px)' }}>
-              <CartItemsContainer products={dataProducts} items={dataCartItems} handleTotalQuantityChange={handleTotalQuantityChange} />
+              <CartItemsContainer products={dataProducts} />
             </div>
           </Grid>
         </Grid>

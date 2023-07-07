@@ -1,18 +1,14 @@
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-interface HeaderProps {
-    handleSignOut: () => void;
-}
-
-export default function Header({ handleSignOut }: HeaderProps) {
+export default function Header() {
     const { data: username } = useQuery<string>(['username'], {
         select: (data: string) => data,
     });
     const queryClient = useQueryClient();
     const signOut = () => {
-        queryClient.clear();
-        handleSignOut();
+        queryClient.clear()
+        queryClient.invalidateQueries()
     };
 
     return (

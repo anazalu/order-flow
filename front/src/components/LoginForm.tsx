@@ -50,6 +50,7 @@ export default function LoginForm() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  id="loginform-username"
                   label="Username"
                   variant="outlined"
                   fullWidth
@@ -61,6 +62,7 @@ export default function LoginForm() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  id="loginform-password"
                   label="Password"
                   type="password"
                   variant="outlined"
@@ -73,6 +75,7 @@ export default function LoginForm() {
               </Grid>
               <Grid item xs={12}>
                 <Button
+                  id="loginform-login-button"
                   variant="contained"
                   color="primary"
                   onClick={handleLogin}

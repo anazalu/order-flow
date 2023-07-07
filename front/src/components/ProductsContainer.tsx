@@ -18,7 +18,7 @@ export default function ProductsContainer({ products }: ProductsContainerProps) 
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-        })
+        }).then((_) => queryClient.invalidateQueries(['cartItems']))
     }
     );
 
