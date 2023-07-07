@@ -60,9 +60,9 @@ jobs:
         export POSTGRES_NAME=orderflow_db
         export POSTGRES_USER=postgres
         export POSTGRES_PASSWORD=postgres
-        sudo apt update
-        sudo apt install postgresql-client
-        psql -U "$POSTGRES_USER" -c "CREATE DATABASE $POSTGRES_NAME;"
+        # sudo apt update
+        # sudo apt install postgresql-client
+        # psql -U "$POSTGRES_USER" -c "CREATE DATABASE $POSTGRES_NAME;"
         cd web
         python manage.py migrate
         python manage.py runserver 0.0.0.0:8000
