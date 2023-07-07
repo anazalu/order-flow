@@ -114,3 +114,10 @@ python manage.py showmigrations
 python manage.py migrate
 python manage.py startapp orderapi
 ```
+## Links
+### YAML
+https://en.wikipedia.org/wiki/YAML
+### mdn: Learn web development
+https://developer.mozilla.org/en-US/docs/Learn
+### Selenium WebDriver: Getting started
+https://www.selenium.dev/documentation/webdriver/getting_started/
