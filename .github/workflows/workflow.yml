@@ -42,15 +42,6 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    # - name: Set up Postgres database
-    #   run: |
-    #     docker run -d \
-    #       --name my-postgres-container \
-    #       -e POSTGRES_USER=myuser \
-    #       -e POSTGRES_PASSWORD=mypassword \
-    #       -e POSTGRES_DB=mydatabase \
-    #       -p 5432:5432 \
-    #       postgres:latest
     - name: Install backend (Python) dependencies
       run: |
         python -m pip install --upgrade pip
