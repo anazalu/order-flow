@@ -61,7 +61,7 @@ jobs:
     - name: Start frontend
       run: |
         cd front
-        npm start
+        npm start &
     - name: Run Tests
       run: |
         pytest .
