@@ -13,36 +13,40 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Customer',
-            fields=[
-                ('customer_id', models.IntegerField(primary_key=True, serialize=False)),
-                ('last_name', models.CharField(max_length=255)),
-                ('email', models.CharField(max_length=255)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Product',
             fields=[
-                ('product_id', models.IntegerField(primary_key=True, serialize=False)),
-                ('product_name', models.CharField(max_length=255)),
-                ('price', models.IntegerField()),
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=255)),
+                ('price', models.DecimalField(max_digits=8, decimal_places=2)),
+                ('image_url', models.CharField()),
+                ('description', models.CharField()),
             ],
+            options={
+                'db_table': 'products',
+            },
         ),
         migrations.CreateModel(
             name='Order',
             fields=[
-                ('order_id', models.IntegerField(primary_key=True, serialize=False)),
-                ('stage', models.CharField(max_length=16)),
-                ('customer_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='orderapi.customer')),
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('user_id', models.ForeignKey(db_column='user_id', on_delete=django.db.models.deletion.CASCADE, to='auth.user')),
+                ('status', models.CharField(max_length=255)),
+                ('created_at', models.DateTimeField(auto_now_add=True, blank=True)),
             ],
+            options={
+                'db_table': 'orders',
+            },
         ),
         migrations.CreateModel(
-            name='Item',
+            name='CartItem',
             fields=[
-                ('item_id', models.IntegerField(primary_key=True, serialize=False)),
-                ('quantity', models.IntegerField()),
-                ('order_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='orderapi.order')),
-                ('product_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='orderapi.product')),
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('order_id', models.ForeignKey(db_column='order_id', on_delete=django.db.models.deletion.CASCADE, to='orderapi.order')),
+                ('product_id', models.ForeignKey(db_column='product_id', on_delete=django.db.models.deletion.CASCADE, to='orderapi.product')),
+                ('quantity', models.PositiveIntegerField()),
             ],
+            options={
+                'db_table': 'cartitems',
+            },
         ),
     ]
