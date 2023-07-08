@@ -8,13 +8,14 @@ describe('API Tests - /api/products/', () => {
     cy.request({
       method: 'POST',
       url: '/api/register/',
+      failOnStatusCode: false,
       body: {
         username: username,
         password: password
       }
     }).then((response) => {
-      if (response.status === 201) {
-        // User created successfully, obtain access token
+      if (response.status == 201 || response.status == 400) { // HTTP 400 is returned if the user already exists (note the 'failOnStatusCode: false' above)
+        // User created successfully (or already exists in the database), obtain access token
         cy.request({
           method: 'POST',
           url: '/api/token/',

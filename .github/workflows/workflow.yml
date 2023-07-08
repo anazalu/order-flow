@@ -73,11 +73,11 @@ jobs:
 
         # add products to the project database
         PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" << EOF
-        INSERT INTO orderapi_product (product_id, product_name, price)
+        INSERT INTO orderapi_product (name, price, image_url, description)
         VALUES
-          (1, 'Product 1', 29),
-          (2, 'Product 2', 19),
-          (3, 'Product 3', 9);
+          ('Product 1', 29.99, 'http://localhost/images/product1.jpg', 'Product 1 description'),
+          ('Product 2', 19.99, 'http://localhost/images/product2.jpg', 'Product 2 description'),
+          ('Product 3', 9.99, 'http://localhost/images/product3.jpg', 'Product 3 description');
         EOF
 
         # DEBUGGING: Select from orderapi_product
