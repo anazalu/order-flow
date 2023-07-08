@@ -72,16 +72,16 @@ jobs:
         python manage.py migrate
 
         # add products to the project database
-        # PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" << EOF
-        # INSERT INTO orderapi_product (name, price, image_url, description)
-        # VALUES
-        #   ('Product 1', 10.99, 'https://example.com/product1.jpg', 'Description of Product 1'),
-        #   ('Product 2', 19.99, 'https://example.com/product2.jpg', 'Description of Product 2'),
-        #   ('Product 3', 7.99, 'https://example.com/product3.jpg', 'Description of Product 3');
-        # EOF
+        PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" << EOF
+        INSERT INTO orderapi_product (product_id, product_name, price)
+        VALUES
+          (1, 'Product 1', 29),
+          (2, 'Product 2', 19),
+          (3, 'Product 3', 9);
+        EOF
 
         # List columns
-        PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" -c "\d orderapi_product"
+        # PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" -c "\d orderapi_product"
 
         # start the Django server
         python manage.py runserver 0.0.0.0:8000 &
