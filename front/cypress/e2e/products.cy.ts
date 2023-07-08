@@ -1,4 +1,4 @@
-describe('API Tests', () => {
+describe('API Tests - GET products', () => {
   let accessToken: string;
 
   before(() => {
