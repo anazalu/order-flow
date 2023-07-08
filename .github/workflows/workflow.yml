@@ -80,6 +80,9 @@ jobs:
           ('Product 3', 7.99, 'https://example.com/product3.jpg', 'Description of Product 3');
         EOF
 
+        # List tables in the database
+        PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" -c "\dt"
+
         # start the Django server
         python manage.py runserver 0.0.0.0:8000 &
     # - name: Run Cypress Tests
