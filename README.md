@@ -114,6 +114,8 @@ python manage.py showmigrations
 python manage.py migrate
 python manage.py startapp orderapi
 ```
+### Cypress
+npx cypress run
 ## Links
 ### YAML
 https://en.wikipedia.org/wiki/YAML

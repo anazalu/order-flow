@@ -1,4 +1,6 @@
-describe('API Tests - GET products', () => {
+describe('API Tests - /api/products/', () => {
+  const username = 'user_products'
+  const password = 'password_products'
   let accessToken: string;
 
   before(() => {
@@ -7,8 +9,8 @@ describe('API Tests - GET products', () => {
       method: 'POST',
       url: '/api/register/',
       body: {
-        username: 'testuser',
-        password: 'testpassword'
+        username: username,
+        password: password
       }
     }).then((response) => {
       if (response.status === 201) {
@@ -17,14 +19,14 @@ describe('API Tests - GET products', () => {
           method: 'POST',
           url: '/api/token/',
           body: {
-            username: 'testuser',
-            password: 'testpassword'
+            username: username,
+            password: password
           }
         }).then((response) => {
-          if (response.body.token) {
-            accessToken = response.body.token;
+          if (response.body.access) {
+            accessToken = response.body.access;
           } else {
-            throw new Error('Access token not found in response');
+            throw new Error('Access token not found in response from /api/token/');
           }
         });
       } else {
@@ -33,7 +35,7 @@ describe('API Tests - GET products', () => {
     });
   });
 
-  it('should return at least 1 product from the API endpoint', () => {
+  it('GET should fetch at least 1 product from the /api/products/ endpoint', () => {
     cy.request({
       method: 'GET',
       url: '/api/products/',
