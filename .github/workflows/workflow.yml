@@ -75,14 +75,13 @@ jobs:
         PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" << EOF
         INSERT INTO orderapi_product (product_id, product_name, price)
         VALUES
-          (1, 'Product 1', 29);
+          (1, 'Product 1', 29),
+          (2, 'Product 2', 19),
+          (3, 'Product 3', 9);
         EOF
 
-        # DEBUGGING: List orderapi_product columns
-        PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" -c "\d orderapi_product"
-
         # DEBUGGING: Select from orderapi_product
-        PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" -c "select * from orderapi_product"
+        # PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" -c "select * from orderapi_product"
 
         # start the Django server
         python manage.py runserver 0.0.0.0:8000 &
