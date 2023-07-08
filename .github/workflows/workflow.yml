@@ -17,7 +17,7 @@ jobs:
       matrix:
         python-version: [3.9]
 
-    # Service containers to run with `runner-job`
+    # Postgres (running in a Docker container)
     services:
       # Label used to access the service container
       postgres:
@@ -56,16 +56,37 @@ jobs:
         npm ci
     - name: Start backend
       run: |
+        # export some environment variables to help Django connect to Postgres (running in a Docker container)
         export POSTGRES_HOST=localhost
         export POSTGRES_NAME=orderflow_db
         export POSTGRES_USER=postgres
         export POSTGRES_PASSWORD=postgres
+
+        # create the project database
         sudo apt update
         sudo apt install postgresql-client
         PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -c "CREATE DATABASE $POSTGRES_NAME;"
         cd web
+
+        # create Django and project tables in the project database
         python manage.py migrate
+
+        # Insert SQL statements to add products to the database
+        python manage.py dbshell << EOF
+        INSERT INTO Products (name, price, image_url, description)
+        VALUES
+          ('Product 1', 10.99, 'https://example.com/product1.jpg', 'Description of Product 1'),
+          ('Product 2', 19.99, 'https://example.com/product2.jpg', 'Description of Product 2'),
+          ('Product 3', 7.99, 'https://example.com/product3.jpg', 'Description of Product 3');
+        EOF
+
+        # start the Django server
         python manage.py runserver 0.0.0.0:8000 &
+    # - name: Run Cypress Tests
+    #   uses: cypress-io/github-action@v5
+    #   with:
+    #     start: ''
+    #     wait-on: 'http://localhost:8000'
     - name: Start frontend
       run: |
         cd front
