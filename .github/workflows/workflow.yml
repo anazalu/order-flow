@@ -73,7 +73,7 @@ jobs:
 
         # add products to the project database
         PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" << EOF
-        INSERT INTO products (name, price, image_url, description)
+        INSERT INTO orderapi_product (name, price, image_url, description)
         VALUES
           ('Product 1', 10.99, 'https://example.com/product1.jpg', 'Description of Product 1'),
           ('Product 2', 19.99, 'https://example.com/product2.jpg', 'Description of Product 2'),
@@ -81,15 +81,15 @@ jobs:
         EOF
 
         # List tables in the database
-        PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" -c "\dt"
+        # PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" -c "\dt"
 
         # start the Django server
         python manage.py runserver 0.0.0.0:8000 &
-    # - name: Run Cypress Tests
-    #   uses: cypress-io/github-action@v5
-    #   with:
-    #     start: ''
-    #     wait-on: 'http://localhost:8000'
+    - name: Run Cypress Tests
+      uses: cypress-io/github-action@v5
+      with:
+        start: ''
+        wait-on: 'http://localhost:8000'
     - name: Start frontend
       run: |
         cd front
