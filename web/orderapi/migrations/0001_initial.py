@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=255)),
                 ('price', models.DecimalField(max_digits=8, decimal_places=2)),
-                ('image_url', models.CharField()),
-                ('description', models.CharField()),
+                ('image_url', models.CharField(max_length=255)),
+                ('description', models.CharField(max_length=255)),
             ],
             options={
                 'db_table': 'products',
