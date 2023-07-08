@@ -6,7 +6,7 @@ This is a web project with Linux, MySQL and Python Django on backend. The server
 
 ## Roles
 
-The project needs 1 backend developer (Python/Django), 1 frontend developer (JavaScript/React), 1 test engineer with test automation skills (Python/pytest/Selenium).
+The project needs 1 backend developer (Python/Django), 1 frontend developer (TypeScript/React), 1 test engineer with test automation skills (Cypress, Selenium).
 
 ## Tasks
 
@@ -17,22 +17,13 @@ Development (backend):
 - ~~Write some backend code that connects to the database and handles GET and POST requests:~~
     ~~- List products~~
     ~~- Place an order~~
-- implement web frontend
-    - main layout
-    - product cards
-    - cart items
-- serve product pictures (large and small) from the web server
+- ~~implement web frontend~~
+- serve product pictures from the web server
 
 Development (frontend):
-- The frontend consumes the REST API and renders a basic web interface.
+- ~~The frontend consumes the REST API and renders a basic web interface.~~
 
 Testing:
-
-To test the endpoints, you can send GET and POST requests to /books/. For example, using curl:
-GET request: curl http://localhost:8000/books/
-POST request: curl -X POST -d "title=New Book&author=John Doe&publication_date=2023-01-01" http://localhost:8000/books/
-
-https://www.section.io/engineering-education/dockerized-django-application-with-github-actions/
 
 - Backend, manual.
 - Backend, automated (pytest).
@@ -46,11 +37,9 @@ https://www.section.io/engineering-education/dockerized-django-application-with-
     - /api/register/ POST
     - /api/token/ POST
     - /api/token/refresh/ POST
-- API, automated (?).
+- API, automated (Cypress).
 - Web, manual.
 - Web, automated (Selenium).
-
-The project needs further refinement to create stories and start development.
 
 ## Architecture
 
@@ -90,6 +79,7 @@ git add README.md
 git merge --continue
 git push
 ```
+
 ### Docker
 ```
 docker image ls
@@ -99,6 +89,7 @@ docker exec -it 22e79424cbac sh
 docker compose up
 docker compose up --build
 ```
+
 ### Postgres
 ```
 psql -U postgres -d orderflow_db
@@ -108,6 +99,7 @@ o.order_id;
 \dt
 \d orders
 ```
+
 ### Django
 ```
 python manage.py showmigrations
@@ -115,11 +107,20 @@ python manage.py migrate
 python manage.py startapp orderapi
 ```
 ### Cypress
+```
 npx cypress run
+```
+
 ## Links
+
 ### YAML
 https://en.wikipedia.org/wiki/YAML
+
 ### mdn: Learn web development
 https://developer.mozilla.org/en-US/docs/Learn
+
 ### Selenium WebDriver: Getting started
 https://www.selenium.dev/documentation/webdriver/getting_started/
+
+### Cypress: Writing Your First E2E Test
+https://docs.cypress.io/guides/end-to-end-testing/writing-your-first-end-to-end-test
