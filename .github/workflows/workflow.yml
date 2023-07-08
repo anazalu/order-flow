@@ -71,9 +71,9 @@ jobs:
         # create Django and project tables in the project database
         python manage.py migrate
 
-        # Insert SQL statements to add products to the database
-        python manage.py dbshell << EOF
-        INSERT INTO Products (name, price, image_url, description)
+        # add products to the project database
+        PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" << EOF
+        INSERT INTO products (name, price, image_url, description)
         VALUES
           ('Product 1', 10.99, 'https://example.com/product1.jpg', 'Description of Product 1'),
           ('Product 2', 19.99, 'https://example.com/product2.jpg', 'Description of Product 2'),
