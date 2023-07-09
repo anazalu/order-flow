@@ -19,21 +19,21 @@ jobs:
 
     # Postgres (running in a Docker container)
     services:
-      # Label used to access the service container
+      # label used to access the service container
       postgres:
         # Docker Hub image
         image: postgres
-        # Provide the password for postgres
+        # provide the password for Postgres
         env:
           POSTGRES_PASSWORD: postgres
-        # Set health checks to wait until postgres has started
+        # set health checks to wait until Postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
         ports:
-          # Maps tcp port 5432 on service container to the host
+          # maps TCP port 5432 on service container to the host
           - 5432:5432
 
     steps:
@@ -66,9 +66,9 @@ jobs:
         sudo apt update
         sudo apt install postgresql-client
         PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -c "CREATE DATABASE $POSTGRES_NAME;"
-        cd web
 
-        # create Django and project tables in the project database
+        # create Django and project tables in the project database (see web/orderapi/migrations/0001_initial.py)
+        cd web
         python manage.py migrate
 
         # add products to the project database
@@ -80,12 +80,9 @@ jobs:
           ('Product 3', 9.99, 'http://localhost/images/product3.jpg', 'Product 3 description');
         EOF
 
-        # DEBUGGING: Select from orderapi_product
-        # PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_NAME" -c "select * from orderapi_product"
-
         # start the Django server
         python manage.py runserver 0.0.0.0:8000 &
-    - name: Run Cypress Tests
+    - name: Run API Tests (Cypress)
       uses: cypress-io/github-action@v5
       with:
         working-directory: ./front
@@ -94,6 +91,6 @@ jobs:
       run: |
         cd front
         npm start &
-    - name: Run Selenium Tests (via pytest)
+    - name: Run UI Tests (pytest/Selenium)
       run: |
         pytest .

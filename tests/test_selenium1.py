@@ -35,14 +35,14 @@ class TestSelenium:
         username.send_keys("user10")
         password.send_keys("user10")
 
-        # # LoginForm, Login (button)
-        # login_button = driver.find_element(by=By.ID, value="loginform-login-button")
-        # # login_button.click()
-        # driver.execute_script("arguments[0].click();", login_button)
+        # LoginForm, Login (button)
+        login_button = driver.find_element(by=By.ID, value="loginform-login-button")
+        # login_button.click()
+        driver.execute_script("arguments[0].click();", login_button)
 
-        # time.sleep(2)
+        time.sleep(2)
 
-        # # list elements
-        # list_visible_elements(driver)
+        # list elements
+        list_visible_elements(driver)
 
         driver.quit()
