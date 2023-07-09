@@ -28,7 +28,7 @@ export default function ProductsContainer({ products }: ProductsContainerProps) 
 
     return (
         <>
-            <div>
+            <div id='products-container-div'>
                 <br />
                 {/* <Typography variant="h5" gutterBottom>
                     Product Selection

@@ -2,7 +2,6 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-
 def list_visible_elements(driver):
     elements = driver.find_elements(By.XPATH, "//*")
     for element in elements:
@@ -32,8 +31,8 @@ class TestSelenium:
         password = driver.find_element(By.ID, "loginform-password")
 
         # LoginForm, Password
-        username.send_keys("user10")
-        password.send_keys("user10")
+        username.send_keys("user")
+        password.send_keys("password")
 
         # LoginForm, Login (button)
         login_button = driver.find_element(by=By.ID, value="loginform-login-button")
@@ -43,6 +42,10 @@ class TestSelenium:
         time.sleep(2)
 
         # list elements
-        list_visible_elements(driver)
+        # list_visible_elements(driver)
+
+        # ProductsContainer, the main div
+        products_div = driver.find_element(By.ID, "products-container-div")
+        assert products_div.is_displayed()
 
         driver.quit()

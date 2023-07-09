@@ -1,6 +1,6 @@
 describe('API Tests - /api/products/', () => {
-  const username = 'user_products'
-  const password = 'password_products'
+  const username = 'user'
+  const password = 'password'
   let accessToken: string;
 
   before(() => {
