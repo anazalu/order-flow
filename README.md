@@ -2,125 +2,89 @@
 
 ## Overview
 
-This is a web project with Linux, MySQL and Python Django on backend. The server exposes a REST API that is consumed by web frontend (React). The project's source code is stored in a GitHub repository.
+A web shop themed project with focus on test automation. The Docker-containerised backend uses Linux, PostgreSQL, Django and exposes a REST API consumed by React frontend.
 
-## Roles
+Testing modes:
 
-The project needs 1 backend developer (Python/Django), 1 frontend developer (TypeScript/React), 1 test engineer with test automation skills (Cypress, Selenium).
+- API, manual (Postman)
+- API, automated (Cypress/TypeScript)
+- Web UI, manual
+- Web UI, automated (Selenium/Python)
 
-## Tasks
+A CI pipeline (GitHub Actions) runs the Cypress and Selenium tests.
 
-Development (backend):
-- ~~Set up a GitHub repo.~~
-- ~~Set up MySQL. Create a Docker image based on a MySQL image. The new image should run an SQL script that creates a database with 2-3 tables (CUSTOMERS, PRODUCTS, ORDERS).~~
-- ~~Set up Python Django (see the instruction below).~~
-- ~~Write some backend code that connects to the database and handles GET and POST requests:~~
-    ~~- List products~~
-    ~~- Place an order~~
-- ~~implement web frontend~~
-- serve product pictures from the web server
+## Authentication
 
-Development (frontend):
-- ~~The frontend consumes the REST API and renders a basic web interface.~~
+The user is required to register using the registration form (username, password, email are passed to the /api/register/ endpoint). All other endpoints expect a JWT token to be sent in request header. The token itself is requested from the /api/token/ endpoint, passing username and password.
 
-Testing:
+## Backend: Postgres, Django
 
-- Backend, manual.
-- Backend, automated (pytest).
-- API, manual (Postman).
-    - /api/products/ GET
-    - /api/products/1/ GET
-    - /api/orders/ GET POST
-    - /api/orders/1/ GET PUT DELETE
-    - /api/cart/items/ POST
-    - /api/cart/items/1/  GET PUT DELETE
-    - /api/register/ POST
-    - /api/token/ POST
-    - /api/token/refresh/ POST
-- API, automated (Cypress).
-- Web, manual.
-- Web, automated (Selenium).
+The project's backend is running as two Docker containers, a Postgres DBMS and a Django web server. The containers are launched by Docker Compose.
 
-## Architecture
+Django REST Framework is used to implement a REST API with these endpoints/methods:
 
-The backend is implemented as two servers, database and application, that run as two Docker containers (uses Docker Compose).
-
-## Some Useful Commands
-
-### Linux
 ```
-history
-touch docker-compose.yml
-code docker-compose.yml
-cd ../..
-mkdir db
-mv Dockerfile db
+- /api/register/         POST
+- /api/token/            POST
+- /api/token/refresh/    POST
+- /api/products/         GET
+- /api/products/1/       GET
+- /api/orders/           GET POST
+- /api/orders/1/         GET PUT DELETE
+- /api/cart/items/       POST
+- /api/cart/items/1/     GET PUT DELETE
 ```
 
-### Git
-```
-git clone
-git log --oneline
-git add create_db.sql
-git status
-git pull
-git checkout feature/DEV-01 
-git commit -am "make some changes"
-git fetch
-git branch -a | grep DEV
-git stash
-git stash pop
-git reset --hard origin/feature/DEV-o2
+## Frontend: React
 
-git checkout main
-git pull
-git merge feature/DEV-01 
-git add README.md
-git merge --continue
-git push
-```
+The frontend is a React/TypeScript single-page application that uses Material UI, React Query and axios.
 
-### Docker
-```
-docker image ls
-docker ps
-docker run --name my-mysql-container -d my-mysql-image
-docker exec -it 22e79424cbac sh
-docker compose up
-docker compose up --build
-```
+The web shop website is implemented as the following components:
 
-### Postgres
-```
-psql -U postgres -d orderflow_db
-SELECT o.order_id, c.last_name, p.product_name, p.price, o.quantity FROM ((orders o INNER JOIN customers c ON o.customer_id = c.customer_id) INNER JOIN products p ON o.product_id = p.product_id) ORDER BY 
-o.order_id;
-\q
-\dt
-\d orders
-```
+- RegistrationForm.tsx
+- LoginForm.tsx
+- Layout.tsx
+- Header.tsx
+- ProductsContainer.tsx
+- ProductCard.tsx
+- CartItemsContainer.tsx
+- CartItem.tsx
 
-### Django
-```
-python manage.py showmigrations
-python manage.py migrate
-python manage.py startapp orderapi
-```
-### Cypress
-```
-npx cypress run
-```
+## Test Automation, API
 
-## Links
+The Cypress framework is used to implement automated tests for the REST API.
 
-### YAML
-https://en.wikipedia.org/wiki/YAML
+## Test Automation, Web UI
 
-### mdn: Learn web development
-https://developer.mozilla.org/en-US/docs/Learn
+The Selenium and pytest frameworks are used to implement end-to-end test automation.
 
-### Selenium WebDriver: Getting started
-https://www.selenium.dev/documentation/webdriver/getting_started/
+## CI Pipeline
 
-### Cypress: Writing Your First E2E Test
-https://docs.cypress.io/guides/end-to-end-testing/writing-your-first-end-to-end-test
+A GitHub Actions workflow is configured to be triggered by a push to any branch.
+
+The workflow has the following steps:
+
+- Set up Python
+- Install backend (Python) dependencies
+- Setup Node.js
+- Install frontend dependencies
+- Start backend
+- Run API Tests (Cypress)
+- Start frontend
+- Run UI Tests (pytest/Selenium)
+
+## Registration/Login Page
+
+On the left, the user enters username/password/email in the registration form.
+
+On the right, the same username/password are used to log in.
+
+![Register/Login Page](./screenshots/of_login.png)
+
+## Main Page
+
+On the left, a product card is displayed for every product in the web shop. These can be added to the cart.
+
+On the right, the products currently in the cart are displayed. Each product's quantity in the cart can be adjusted. Any product can be removed from the cart.
+
+![Main Page](./screenshots/of_main_screen.png)

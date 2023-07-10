@@ -14,8 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       max-parallel: 4
-      matrix:
-        python-version: [3.9]
+      # matrix:
+      #   python-version: [3.9]
 
     # Postgres (running in a Docker container)
     services:
@@ -38,10 +38,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python
       uses: actions/setup-python@v3
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.9
     - name: Install backend (Python) dependencies
       run: |
         python -m pip install --upgrade pip

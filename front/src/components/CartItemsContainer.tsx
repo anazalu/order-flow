@@ -74,7 +74,7 @@ export default function CartItemsContainer({ products }: CartItemsContainerProps
           Items in the cart: {items?.length}
         </Typography>
         <Typography variant="h6" gutterBottom>
-          Total: {items?.map((item) => calculateSubtotal(item, products)).reduce((prev, cur) => prev + cur).toFixed(2)}
+          Total: ${items?.map((item) => calculateSubtotal(item, products)).reduce((prev, cur) => prev + cur).toFixed(2)}
         </Typography>
         <ol style={{ listStyle: 'none', padding: 0 }}>
           {items?.sort((a, b) => a.id - b.id).map((item) => (
@@ -97,7 +97,7 @@ export default function CartItemsContainer({ products }: CartItemsContainerProps
           ))}
         </ol>
         <Typography variant="h6" gutterBottom>
-          Total: {items?.map((item) => calculateSubtotal(item, products)).reduce((prev, cur) => prev + cur).toFixed(2)}
+          Total: ${items?.map((item) => calculateSubtotal(item, products)).reduce((prev, cur) => prev + cur).toFixed(2)}
         </Typography>
       </div>
     </>

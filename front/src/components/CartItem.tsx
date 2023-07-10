@@ -31,7 +31,7 @@ export default function CartItem({ product, item, increaseQuantity, decreaseQuan
                 {product?.image_url && <img src='https://media.cnn.com/api/v1/images/stellar/prod/120604032828-fresh-ripe-bananas.jpg?q=x_0,y_106,h_2019,w_3590,c_crop/h_720,w_1280/f_webp' alt={product.name} style={{ height: '2rem', marginRight: '1rem' }} />}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1 }}>
                     <Typography variant="body2" color="text.secondary" style={{ fontSize: '1.0rem', marginLeft: '0.5rem' }}>
-                        {product?.name} x {item?.quantity} = {product && item ? (product.price * item.quantity).toFixed(2) : '?'}
+                        {product?.name} x {item?.quantity} = ${product && item ? (product.price * item.quantity).toFixed(2) : '?'}
                     </Typography>
                 </div>
                 <div>

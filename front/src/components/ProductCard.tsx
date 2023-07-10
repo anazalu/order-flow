@@ -20,7 +20,7 @@ export default function ProductCard({ product, addToCart }: ProductCardProps) {
                     {product.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Price: {product.price}
+                    Price: ${product.price}
                 </Typography>
             </CardContent>
             <CardActions>
