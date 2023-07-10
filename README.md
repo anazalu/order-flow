@@ -13,6 +13,8 @@ Testing modes:
 
 A CI pipeline (GitHub Actions) runs the Cypress and Selenium tests.
 
+![Main Page](./screenshots/of_main_screen.png)
+
 ## Authentication
 
 The user is required to register using the registration form (username, password, email are passed to the /api/register/ endpoint). All other endpoints expect a JWT token to be sent in request header. The token itself is requested from the /api/token/ endpoint, passing username and password.
@@ -72,19 +74,3 @@ The workflow has the following steps:
 - Run API Tests (Cypress)
 - Start frontend
 - Run UI Tests (pytest/Selenium)
-
-## Registration/Login Page
-
-On the left, the user enters username/password/email in the registration form.
-
-On the right, the same username/password are used to log in.
-
-![Register/Login Page](./screenshots/of_login.png)
-
-## Main Page
-
-On the left, a product card is displayed for every product in the web shop. These can be added to the cart.
-
-On the right, the products currently in the cart are displayed. Each product's quantity in the cart can be adjusted. Any product can be removed from the cart.
-
-![Main Page](./screenshots/of_main_screen.png)
