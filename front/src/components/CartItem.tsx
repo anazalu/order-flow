@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography, Button, IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import AddCircleOutlineOutlined from '@mui/icons-material/AddCircleOutlineOutlined';
+import RemoveCircleOutlineOutlined from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import { Product, Item } from '../types'
 
 interface CartItemProps {
@@ -36,14 +36,14 @@ export default function CartItem({ product, item, increaseQuantity, decreaseQuan
                     </Typography>
                 </div>
                 <div>
-                    <Button variant="outlined" onClick={handleDecrease} disabled={item?.quantity === 1}>
-                        <RemoveIcon />
-                    </Button>
-                    <Button variant="outlined" onClick={handleIncrease}>
-                        <AddIcon />
-                    </Button>
-                    <IconButton color="error" onClick={handleDelete}>
-                        <DeleteIcon />
+                    <IconButton onClick={handleDecrease} disabled={item?.quantity === 1}>
+                        <RemoveCircleOutlineOutlined />
+                    </IconButton>
+                    <IconButton onClick={handleIncrease}>
+                        <AddCircleOutlineOutlined />
+                    </IconButton>
+                    <IconButton onClick={handleDelete}>
+                        <DeleteOutlinedIcon />
                     </IconButton>
                 </div>
             </CardContent>

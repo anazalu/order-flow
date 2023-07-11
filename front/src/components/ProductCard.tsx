@@ -23,7 +23,7 @@ export default function ProductCard({ product, addToCart }: ProductCardProps) {
                 </Typography>
             </CardContent>
             <CardActions style={{ justifyContent: 'center' }}>
-                <Button variant="contained" color="primary" onClick={handleAddToCart}>
+                <Button variant="outlined" color="primary" onClick={handleAddToCart}>
                     Add to cart
                 </Button>
             </CardActions>
