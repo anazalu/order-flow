@@ -51,7 +51,6 @@ export default function Layout() {
             </div>
           </Grid>
         </Grid>
-
       ) : (
         <div style={{ display: 'flex', alignItems: 'center', height: '75vh' }}>
           <Grid container spacing={2} style={{ alignItems: 'center' }}>

@@ -55,7 +55,7 @@ class ProductDetail(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-class LatestOrder(generics.ListCreateAPIView):
+class LatestOrder(generics.ListAPIView):
     serializer_class = OrderSerializer
 
     def get_queryset(self):

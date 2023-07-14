@@ -31,9 +31,8 @@ Django REST Framework is used to implement a REST API with these endpoints/metho
 - /api/token/refresh/    POST
 - /api/products/         GET
 - /api/products/1/       GET
-- /api/orders/           GET POST
-- /api/orders/1/         GET PUT DELETE
-- /api/cart/items/       POST
+- /api/orders/           GET
+- /api/cart/items/       GET POST
 - /api/cart/items/1/     GET PUT DELETE
 ```
 
