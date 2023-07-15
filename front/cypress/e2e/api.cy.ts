@@ -1,4 +1,4 @@
-describe('API Tests - /api/products/', () => {
+describe('API Tests', () => {
   const username = 'user'
   const password = 'password'
   let accessToken: string;
@@ -126,7 +126,7 @@ describe('API Tests - /api/products/', () => {
       });
   });
 
-  it('PUT should modify quantity of a cart item using the /api/cart/items/<int:pk> endpoint', () => {
+  it('PUT should modify quantity of a cart item using the /api/cart/items/1/ endpoint', () => {
 
     let itemId: number;
     let expectedQuantity: number;
@@ -188,7 +188,7 @@ describe('API Tests - /api/products/', () => {
       });
   });
 
-  it('DELETE should remove a cart item using the /api/cart/items/<int:pk> endpoint', () => {
+  it('DELETE should remove a cart item using the /api/cart/items/1/ endpoint', () => {
 
     let itemId: number;
 

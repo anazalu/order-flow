@@ -51,11 +51,18 @@ The web shop website is implemented as the following components:
 - CartItemsContainer.tsx
 - CartItem.tsx
 
-## Test Automation, API
+## API Test Automation: Cypress
 
-The Cypress framework is used to implement automated tests for the REST API.
+The Cypress framework is used to implement automated tests for the REST API:
 
-## Test Automation, Web UI
+- GET should fetch at least 1 product from the /api/products/ endpoint
+- GET should fetch product details from the /api/products/1/ endpoint
+- GET should fetch 1 order from the /api/orders/ endpoint
+- POST should add item to cart and GET should fetch last cart item from the /api/cart/items/ endpoint
+- PUT should modify quantity of a cart item using the /api/cart/items/1/ endpoint
+- DELETE should remove a cart item using the /api/cart/items/1/ endpoint
+
+## Web UI Test Automation: Selenium
 
 The Selenium and pytest frameworks are used to implement end-to-end test automation.
 
