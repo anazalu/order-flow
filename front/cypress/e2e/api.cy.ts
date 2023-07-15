@@ -85,41 +85,46 @@ describe('API Tests - /api/products/', () => {
       });
   });
 
-  // it('POST should add item to cart and GET should fetch last cart item from the /api/cart/items/ endpoint', () => {
+  it('POST should add item to cart and GET should fetch last cart item from the /api/cart/items/ endpoint', () => {
 
-  //   const expected_product_id = 1;
-  //   const expected_quantity = 1;
+    const expected_product_id = 1;
+    const expected_quantity = 1;
 
-  //   cy.request({
-  //     method: 'POST',
-  //     url: '/api/cart/items/',
-  //     headers: {
-  //       Authorization: `Bearer ${accessToken}`
-  //     },
-  //     body: {
-  //       product_id: expected_product_id,
-  //       quantity: expected_quantity
-  //     }
-  //   })
-  //     .then((postResponse) => {
-  //       expect(postResponse.status).to.equal(201);
+    cy.request({
+      method: 'POST',
+      url: '/api/cart/items/',
+      failOnStatusCode: false,
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+      body: {
+        product_id: expected_product_id,
+        quantity: expected_quantity
+      }
+    })
+      .then((postResponse) => {
+        
+        if (postResponse.status != 201) {
+          cy.log(postResponse.body);
+        }
+        expect(postResponse.status).to.equal(201);
 
-  //       return cy.request({
-  //         method: 'GET',
-  //         url: '/api/cart/items/',
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`
-  //         }
-  //       });
-  //     })
-  //     .then((response) => {
-  //       expect(response.status).to.equal(200);
-  //       expect(response.body).to.have.length.greaterThan(0);
-  //       expect(response.body[0]).to.have.property('id');
-  //       expect(response.body[0]).to.have.property('product_id', expected_product_id);
-  //       expect(response.body[0]).to.have.property('quantity', expected_quantity);
-  //     });
-  // });
+        return cy.request({
+          method: 'GET',
+          url: '/api/cart/items/',
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+      })
+      .then((response) => {
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.length.greaterThan(0);
+        expect(response.body[0]).to.have.property('id');
+        expect(response.body[0]).to.have.property('product_id', expected_product_id);
+        expect(response.body[0]).to.have.property('quantity', expected_quantity);
+      });
+  });
 
   it('PUT should modify quantity of a cart item using the /api/cart/items/<int:pk> endpoint', () => {
 
