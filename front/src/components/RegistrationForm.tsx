@@ -61,6 +61,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                id="registrationform-username"
                 label="Username"
                 variant="outlined"
                 fullWidth
@@ -72,6 +73,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                id="registrationform-email"
                 label="Email"
                 variant="outlined"
                 fullWidth
@@ -83,6 +85,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                id="registrationform-password"
                 label="Password"
                 type="password"
                 variant="outlined"
@@ -95,6 +98,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
             </Grid>
             <Grid item xs={12}>
               <Button
+                id="registrationform-register-button"
                 type="submit"
                 variant="contained"
                 color="primary"
