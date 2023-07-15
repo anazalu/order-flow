@@ -77,13 +77,13 @@ jobs:
         VALUES
           ('Whiskerjig Table', 299.99, 'http://localhost:3000/images/01.jpg', 'Product 1 description'),
           ('Fluffelorn Chaise', 199.99, 'http://localhost:3000/images/02.jpg', 'Product 2 description'),
-          ('Gobbledy Table', 349.99, 'http://localhost:3000/images/03.jpg', 'Product 3 description');
-          ('Fluffernut Ottoman', 249.99, 'http://localhost:3000/images/04.jpg', 'Product 4 description');
-          ('Pufflewump Sofa', 549.99, 'http://localhost:3000/images/05.jpg', 'Product 5 description');
-          ('Zippitydoo Table', 129.99, 'http://localhost:3000/images/06.jpg', 'Product 6 description');
-          ('Snuggleplank Table', 29.99, 'http://localhost:3000/images/07.jpg', 'Product 7 description');
-          ('Bumbleflop Chair', 629.99, 'http://localhost:3000/images/08.jpg', 'Product 8 description');
-          ('Zonkplunk Ottoman', 229.99, 'http://localhost:3000/images/09.jpg', 'Product 9 description');
+          ('Gobbledy Table', 349.99, 'http://localhost:3000/images/03.jpg', 'Product 3 description'),
+          ('Fluffernut Ottoman', 249.99, 'http://localhost:3000/images/04.jpg', 'Product 4 description'),
+          ('Pufflewump Sofa', 549.99, 'http://localhost:3000/images/05.jpg', 'Product 5 description'),
+          ('Zippitydoo Table', 129.99, 'http://localhost:3000/images/06.jpg', 'Product 6 description'),
+          ('Snuggleplank Table', 29.99, 'http://localhost:3000/images/07.jpg', 'Product 7 description'),
+          ('Bumbleflop Chair', 629.99, 'http://localhost:3000/images/08.jpg', 'Product 8 description'),
+          ('Zonkplunk Ottoman', 229.99, 'http://localhost:3000/images/09.jpg', 'Product 9 description'),
           ('Flibberjibber Table', 329.99, 'http://localhost:3000/images/10.jpg', 'Product 10 description');
         EOF
 

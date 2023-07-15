@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
                 ('quantity', models.PositiveIntegerField()),
             ],
             options={
-                'db_table': 'cartitems',
+                'db_table': 'orderitems',
             },
         ),
     ]
