@@ -1,6 +1,11 @@
 import time
+import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+
+@pytest.fixture(scope = 'class')
+def username():
+    return 'user' + str(time.time())[11:]
 
 def list_visible_elements(driver):
     elements = driver.find_elements(By.XPATH, "//*")
@@ -13,11 +18,8 @@ def list_visible_elements(driver):
             print(element_tag_name, 'id =', element_id, 'name =', element_name, 'class =', element_class)
     print('=' * 200)
 
-class TestSelenium:
-    def __init__(self) -> None:
-        self.username = 'user' + str(time.time())[11:]
-
-    def test_registration_form(self):        
+class TestSelenium:    
+    def test_registration_form(self, username):        
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
         driver = webdriver.Chrome(options=options)
@@ -35,8 +37,8 @@ class TestSelenium:
         password = driver.find_element(By.ID, "registrationform-password")
 
         # RegistrationForm, fill in
-        username_element.send_keys(self.username)
-        email.send_keys(self.username + "@example.com")
+        username_element.send_keys(username)
+        email.send_keys(username + "@example.com")
         password.send_keys("password")
 
         # RegistrationForm, Register (button)
@@ -62,7 +64,7 @@ class TestSelenium:
 
         driver.quit()
 
-    def test_login_form(self):
+    def test_login_form(self, username):
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
         driver = webdriver.Chrome(options=options)
@@ -72,11 +74,11 @@ class TestSelenium:
         driver.implicitly_wait(0.5)
 
         # LoginForm, find elements
-        username = driver.find_element(By.ID, "loginform-username")
+        username_element = driver.find_element(By.ID, "loginform-username")
         password = driver.find_element(By.ID, "loginform-password")
 
         # LoginForm, fill in
-        username.send_keys(self.username)
+        username_element.send_keys(username)
         password.send_keys("password")
 
         # LoginForm, Login (button)
