@@ -10,6 +10,6 @@ djangorestframework>=3.11.0
 djangorestframework-simplejwt>=5.2.2
 
 pytest>=6.2.5
-pytest-django>=4.4.0
+# pytest-django>=4.4.0
 
 selenium==4.10.0

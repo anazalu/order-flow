@@ -66,6 +66,11 @@ npm start
 npx cypress run
 ```
 
+### pytest
+```
+python -m pytest -k "test_registration_form"
+```
+
 ## Links
 
 ### YAML

@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { Typography } from '@mui/material';
+// import { Typography } from '@mui/material';
 import { Product } from '../types'
 import ProductCard from './ProductCard';
 

@@ -63,18 +63,17 @@ export default function CartItemsContainer({ products }: CartItemsContainerProps
     deleteCartItemMutation.mutate(itemId);
   };
 
+  const total: string = items?.map((item) => calculateSubtotal(item, products)).reduce((prev, cur) => prev + cur, 0).toFixed(2) || '0.00';
+
   return (
     <>
       <div style={{ overflow: 'auto', maxHeight: '100%' /* 'calc(100vh - 64px)' */ }}>
-        {/* <Typography variant="h5" gutterBottom>
-          Cart
-        </Typography> */}
-        <Typography variant="h6" gutterBottom>
+        <Typography id={'CartItemsContainer-item-count'} variant="h6" gutterBottom>
           <br />
           Items in the cart: {items?.length}
         </Typography>
-        <Typography variant="h6" gutterBottom>
-          Total: ${items?.map((item) => calculateSubtotal(item, products)).reduce((prev, cur) => prev + cur, 0).toFixed(2)}
+        <Typography id={'CartItemsContainer-total-amount'} variant="h6" gutterBottom>
+          Total: ${total}
         </Typography>
         <ol style={{ listStyle: 'none', padding: 0 }}>
           {items?.sort((a, b) => a.id - b.id).map((item) => (
@@ -97,7 +96,7 @@ export default function CartItemsContainer({ products }: CartItemsContainerProps
           ))}
         </ol>
         <Typography variant="h6" gutterBottom>
-          Total: ${items?.map((item) => calculateSubtotal(item, products)).reduce((prev, cur) => prev + cur, 0).toFixed(2)}
+          Total: ${total}
         </Typography>
       </div>
     </>
