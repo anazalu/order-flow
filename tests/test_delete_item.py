@@ -1,9 +1,9 @@
 import time
 from selenium.webdriver.common.by import By
 
-def extract_subtotal(s: str) -> int:
+def extract_subtotal(s: str) -> float:
     x = s.index('$') 
-    return int(s[(x + 1):])
+    return float(s[(x + 1):])
 
 def extract_total(s: str) -> int:
     x = s.index('$') 
