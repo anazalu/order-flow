@@ -80,8 +80,9 @@ https://en.wikipedia.org/wiki/YAML
 https://developer.mozilla.org/en-US/docs/Learn
 https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/A_first_splash
 
-### Selenium WebDriver: Getting started
-https://www.selenium.dev/documentation/webdriver/getting_started/
+### Selenium WebDriver: Waiting strategies
+https://www.selenium.dev/documentation/webdriver/waits/
+https://www.selenium.dev/selenium/docs/api/py/webdriver_support/selenium.webdriver.support.expected_conditions.html
 
 ### Cypress: Writing Your First E2E Test
 https://docs.cypress.io/guides/end-to-end-testing/writing-your-first-end-to-end-test

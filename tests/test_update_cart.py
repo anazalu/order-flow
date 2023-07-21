@@ -1,5 +1,8 @@
-import time
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from conftest import wait_for_element_text_change
 
 def extract_quantity(s: str) -> int:
     l = s.split()
@@ -9,44 +12,13 @@ def extract_quantity(s: str) -> int:
 class TestSelenium:
     def test_update_cart_item(self, driver):
         # ProductCard, Add to cart (button) 
-        add_button = driver.find_element(By.ID, "ProductCard-1-button")
-        assert add_button.is_displayed()
+        add_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "ProductCard-1-button")))
         driver.execute_script("arguments[0].click();", add_button)
-        
-        time.sleep(1)
-        
-        # CartItem, item quantity retrieved
-        cart_item = driver.find_element(By.ID, "CartItem-1-name-quantity-subtotal")
-        assert cart_item.is_displayed()
-        quantity_retrieved = extract_quantity(cart_item.text)
-        
-        # =================================================================
-        # CartItem, increase quantity (iconbutton) 
-        plus_button = driver.find_element(By.ID, "CartItem-1-increase")
-        assert plus_button.is_displayed()
-        driver.execute_script("arguments[0].click();", plus_button)
-        
-        time.sleep(1)
-        
-        # CartItem, item quantity successfully increased
-        cart_item = driver.find_element(By.ID, "CartItem-1-name-quantity-subtotal")
-        assert cart_item.is_displayed()
-        quantity_after_plus = extract_quantity(cart_item.text)
-        assert quantity_after_plus == quantity_retrieved + 1
-       
-        # =================================================================              
-        # CartItem, decrease quantity (iconbutton)
-        minus_button = driver.find_element(By.ID, "CartItem-1-decrease")
-        assert minus_button.is_displayed()
-        driver.execute_script("arguments[0].click();", minus_button)
-        
-        time.sleep(1)
-        
-        # CartItem, item quantity successfully decreased
-        cart_item = driver.find_element(By.ID, "CartItem-1-name-quantity-subtotal")
-        assert cart_item.is_displayed()
-        quantity_after_minus = extract_quantity(cart_item.text)
-        assert quantity_after_minus == quantity_after_plus - 1
 
-        # =================================================================              
-        # CartItem, delete item (iconbutton) 
+        # CartItem, increase quantity
+        old_text, new_text = wait_for_element_text_change(driver, (By.ID, "CartItem-1-increase"), (By.ID, "CartItem-1-name-quantity-subtotal"))
+        assert extract_quantity(old_text) + 1 == extract_quantity(new_text)
+
+        # CartItem, decrease quantity
+        old_text, new_text = wait_for_element_text_change(driver, (By.ID, "CartItem-1-decrease"), (By.ID, "CartItem-1-name-quantity-subtotal"))
+        assert extract_quantity(old_text) - 1 == extract_quantity(new_text)
