@@ -6,9 +6,10 @@ import CartItem from './CartItem';
 
 interface CartItemsContainerProps {
   products: Product[] | undefined;
+  items: Item[] | undefined;
 }
 
-export default function CartItemsContainer({ products }: CartItemsContainerProps) {
+export default function CartItemsContainer({ products, items }: CartItemsContainerProps) {
   const queryClient = useQueryClient();
   const token = queryClient.getQueryData<string>(['token']);
 
@@ -19,20 +20,20 @@ export default function CartItemsContainer({ products }: CartItemsContainerProps
     return item.quantity * product.price;
   };
 
-  const { isLoading: isLoadingCartItems, data: items, error: errorCartItems, refetch: refetchCartItems } = useQuery<Item[]>(['cartItems'], (): Promise<Item[]> => {
-    return axios
-      .get('http://localhost:8000/api/cart/items/', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => res.data)
-  },
-    {
-      enabled: token !== undefined,
-      cacheTime: 0,
-    }
-  );
+  // const { isLoading: isLoadingCartItems, data: items, error: errorCartItems, refetch: refetchCartItems } = useQuery<Item[]>(['cartItems'], (): Promise<Item[]> => {
+  //   return axios
+  //     .get('http://localhost:8000/api/cart/items/', {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((res) => res.data)
+  // },
+  //   {
+  //     enabled: token !== undefined,
+  //     cacheTime: 0,
+  //   }
+  // );
 
   const updateCartItemMutation = useMutation((item: Item) => {
     return axios.put(`http://localhost:8000/api/cart/items/${item.id}/`, { product_id: item.product_id, quantity: item.quantity }, {
@@ -40,8 +41,7 @@ export default function CartItemsContainer({ products }: CartItemsContainerProps
         Authorization: `Bearer ${token}`,
       },
     }).then((_) => queryClient.invalidateQueries(['cartItems']))
-  }
-  );
+  });
 
   const deleteCartItemMutation = useMutation((itemId: number) => {
     return axios.delete(`http://localhost:8000/api/cart/items/${itemId}/`, {

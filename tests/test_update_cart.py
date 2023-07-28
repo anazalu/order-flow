@@ -11,8 +11,8 @@ def extract_quantity(s: str) -> int:
     
 class TestSelenium:
     def test_update_cart_item(self, driver):
-        # ProductCard, Add to cart (button) 
-        add_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "ProductCard-1-button")))
+        # ProductCard, Add to cart (addButton) 
+        add_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "ProductCard-1-addButton")))
         driver.execute_script("arguments[0].click();", add_button)
 
         # CartItem, increase quantity

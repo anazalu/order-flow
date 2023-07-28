@@ -22,7 +22,7 @@ export default function Layout() {
     select: (data: string) => data,
   });
 
-  const { isLoading: isLoadingProducts, data: dataProducts, error: errorProducts } = useQuery<Product[]>(['products'], (): Promise<Product[]> =>
+  const { isLoading: isLoadingProducts, data: products, error: errorProducts } = useQuery<Product[]>(['products'], (): Promise<Product[]> =>
     axios
       .get('http://localhost:8000/api/products/', {
         headers: {
@@ -35,6 +35,21 @@ export default function Layout() {
     }
   );
 
+  const { isLoading: isLoadingCartItems, data: items, error: errorCartItems, refetch: refetchCartItems } = useQuery<Item[]>(['cartItems'], (): Promise<Item[]> => {
+    return axios
+      .get('http://localhost:8000/api/cart/items/', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => res.data)
+  },
+    {
+      enabled: token !== undefined,
+      cacheTime: 0,
+    }
+  );
+
   return (
     <>
       <Header />
@@ -42,12 +57,12 @@ export default function Layout() {
         <Grid container spacing={2}>
           <Grid item xs={8}>
             <div style={{ overflow: 'auto', maxHeight: 'calc(100vh - 64px)' }}>
-              <ProductsContainer products={dataProducts} />
+              <ProductsContainer products={products} items={items} />
             </div>
           </Grid>
           <Grid item xs={4}>
             <div style={{ overflow: 'auto', maxHeight: 'calc(100vh - 64px)' }}>
-              <CartItemsContainer products={dataProducts} />
+              <CartItemsContainer products={products} items={items} />
             </div>
           </Grid>
         </Grid>

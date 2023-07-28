@@ -27,7 +27,7 @@ git reset --hard origin/feature/DEV-o2
 
 git checkout main
 git pull
-git merge feature/DEV-01 
+git merge feature/DEV-01
 git add README.md
 git merge --continue
 git push
@@ -111,3 +111,16 @@ For an entry-level test automation developer/engineer specializing in Python (py
 9. **Continuous Learning**: Test automation technologies and practices evolve rapidly. Being open to continuous learning and staying updated with the latest tools, frameworks, and best practices is important. Actively seeking out new knowledge and improving your skills will help you excel in the field.
 
 It's worth noting that these are foundational skills expected from an entry-level test automation developer/engineer. The specific skill set may vary based on the organization, project requirements, and technology stack. As you gain experience and work on real-world projects, you will continue to enhance your skills and broaden your expertise in test automation.
+
+
+Python, TypeScript
+Selenium, Cypress
+HTTP, REST, Postman
+HTML, CSS, React
+Git, GitHub
+Linux
+Docker
+GitHub Actions, Jenkins(?)
+Jira(?)
+testing theory, making test plans
+SQL, Postgres
