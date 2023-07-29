@@ -8,10 +8,10 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   web:
-    build: ./web
+    build: ./back
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./web:/code
+      - ./back:/code
     ports:
       - "8000:8000"
     environment:
