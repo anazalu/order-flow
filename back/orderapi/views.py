@@ -55,13 +55,25 @@ class ProductDetail(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-class LatestOrder(generics.ListAPIView):
+# class LatestOrder(generics.ListAPIView):
+#     serializer_class = OrderSerializer
+
+#     def get_queryset(self):
+#         token = self.request.headers.get('Authorization', '').split(' ')[1]
+#         order_id = get_or_create_current_order(token)
+#         queryset = Order.objects.filter(id=order_id)
+#         return queryset
+    
+class LatestOrder(generics.RetrieveAPIView):  # Change to RetrieveAPIView
     serializer_class = OrderSerializer
 
-    def get_queryset(self):
+    def get_object(self):
         token = self.request.headers.get('Authorization', '').split(' ')[1]
         order_id = get_or_create_current_order(token)
-        queryset = Order.objects.filter(id=order_id)
+        try:
+            queryset = Order.objects.get(id=order_id)  # Use get() instead of filter()
+        except Order.DoesNotExist:
+            raise NOT_FOUND('Order not found')
         return queryset
 
 class CartItemCreateList(generics.ListCreateAPIView):

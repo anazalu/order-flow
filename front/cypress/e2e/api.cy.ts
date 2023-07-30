@@ -79,9 +79,8 @@ describe('API Tests', () => {
     })
       .then((response) => {
         expect(response.status).to.equal(200);
-        expect(response.body).to.have.lengthOf(1);
-        expect(response.body[0]).to.have.property('status', 'new');
-        expect(response.body[0]).to.have.property('created_at');
+        expect(response.body).to.have.property('status', 'new');
+        expect(response.body).to.have.property('created_at');
       });
   });
 
