@@ -36,7 +36,7 @@ export default function CartItem({ product, item, increaseQuantity, decreaseQuan
                     </Typography>
                 </div>
                 <div>
-                    <IconButton id={`CartItem-${product?.id}-decrease`} onClick={handleDecrease} disabled={item?.quantity === 1}>
+                    <IconButton id={`CartItem-${product?.id}-decrease`} onClick={handleDecrease}>
                         <RemoveCircleOutlineOutlined />
                     </IconButton>
                     <IconButton id={`CartItem-${product?.id}-increase`} onClick={handleIncrease}>

@@ -56,7 +56,11 @@ export default function CartItemsContainer({ products, items }: CartItemsContain
   };
 
   const handleDecrease = (item: Item) => {
-    updateCartItemMutation.mutate({ id: item.id, product_id: item.product_id, quantity: item.quantity - 1 });
+    if (item.quantity > 1) {
+      updateCartItemMutation.mutate({ id: item.id, product_id: item.product_id, quantity: item.quantity - 1 });
+    } else {
+      deleteCartItemMutation.mutate(item.id);
+    }
   };
 
   const handleDelete = (itemId: number) => {
