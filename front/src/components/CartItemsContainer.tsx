@@ -114,7 +114,7 @@ export default function CartItemsContainer({ products, items }: CartItemsContain
           Total: ${total}
         </Typography>
         {(total_discount != '0.00') &&
-          <Typography variant="h6" gutterBottom id={"Cart-total-discount"} color="text.secondary">
+          <Typography id={"CartItemsContainer-total-discount"} variant="h6" gutterBottom color="text.secondary">
             You save: ${total_discount}
           </Typography>
         }
