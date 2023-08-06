@@ -65,6 +65,7 @@ describe('API Tests', () => {
         expect(response.status).to.equal(200);
         expect(response.body).to.have.property('name', 'Whiskerjig Table')
         expect(response.body).to.have.property('price', '299.99')
+        expect(response.body).to.have.property('price_full', '349.99')
         expect(response.body).to.have.property('image_url', 'http://localhost:3000/images/01.jpg')
       });
   });

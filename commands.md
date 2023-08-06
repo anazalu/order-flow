@@ -46,8 +46,8 @@ docker compose up --build
 ### Postgres
 ```
 psql -U postgres -d orderflow_db
-SELECT o.order_id, c.last_name, p.product_name, p.price, o.quantity FROM ((orders o INNER JOIN customers c ON o.customer_id = c.customer_id) INNER JOIN products p ON o.product_id = p.product_id) ORDER BY 
-o.order_id;
+SELECT o.order_id, c.last_name, p.product_name, p.price, o.quantity FROM ((orders o INNER JOIN customers c ON o.customer_id = c.customer_id) INNER JOIN products p ON o.product_id = p.product_id) ORDER BY o.order_id;
+UPDATE products SET price_full = 499.99 WHERE id = 4;
 \q
 \dt
 \d orders
@@ -56,6 +56,7 @@ o.order_id;
 ### Django
 ```
 python manage.py showmigrations
+python manage.py makemigrations
 python manage.py migrate
 python manage.py startapp orderapi
 ```

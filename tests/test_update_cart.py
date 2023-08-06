@@ -12,7 +12,7 @@ def extract_quantity(s: str) -> int:
 def extract_count(s: str) -> int:
     x = s.index(':') 
     return int(s[(x + 2):])
-    
+
 class TestSelenium:
     def test_update_cart_item(self, driver):
         # ProductCard, Add to cart (addButton) -> quantity = 1

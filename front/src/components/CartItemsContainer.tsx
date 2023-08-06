@@ -20,6 +20,15 @@ export default function CartItemsContainer({ products, items }: CartItemsContain
     return item.quantity * product.price;
   };
 
+  const calculateSubtotalFull = (item: Item | undefined, products: Product[] | undefined): number => {
+    if (!item) return 0;
+    const product: Product | undefined = products?.find(element => element.id == item.product_id);
+    if (!product) return 0;
+    let my_full_price: number = product.price_full;
+    if (!product.price_full) { my_full_price = product.price };
+    return item.quantity * my_full_price;
+  };
+
   // const { isLoading: isLoadingCartItems, data: items, error: errorCartItems, refetch: refetchCartItems } = useQuery<Item[]>(['cartItems'], (): Promise<Item[]> => {
   //   return axios
   //     .get('http://localhost:8000/api/cart/items/', {
@@ -68,6 +77,8 @@ export default function CartItemsContainer({ products, items }: CartItemsContain
   };
 
   const total: string = items?.map((item) => calculateSubtotal(item, products)).reduce((prev, cur) => prev + cur, 0).toFixed(2) || '0.00';
+  const total_full: string = items?.map((item) => calculateSubtotalFull(item, products)).reduce((prev, cur) => prev + cur, 0).toFixed(2) || '0.00';
+  const total_discount: string = (Number(total_full) - Number(total)).toFixed(2);
 
   return (
     <>
@@ -102,6 +113,11 @@ export default function CartItemsContainer({ products, items }: CartItemsContain
         <Typography variant="h6" gutterBottom>
           Total: ${total}
         </Typography>
+        {(total_discount != '0.00') &&
+          <Typography variant="h6" gutterBottom id={"Cart-total-discount"} color="text.secondary">
+            You save: ${total_discount}
+          </Typography>
+        }
       </div>
     </>
   )
