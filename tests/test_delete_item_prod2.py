@@ -45,4 +45,5 @@ class TestSelenium:
         total_amount = driver.find_element(By.ID, "CartItemsContainer-total-amount")     
         assert total_amount.is_displayed() 
         total_after_delete = extract_amount(total_amount.text)
-        assert total_after_delete == total_before_delete - subtotal     
+        assert total_after_delete == total_before_delete - subtotal
+
