@@ -1,2 +1,3 @@
 db/data/
 .vscode/
+tests/__pycache__/

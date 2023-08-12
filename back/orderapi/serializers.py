@@ -4,7 +4,7 @@ from .models import Product, User, Order, CartItem
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'name', 'price', 'image_url', 'description']
+        fields = ['id', 'name', 'price','price_full', 'image_url', 'description']
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)

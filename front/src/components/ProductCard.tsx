@@ -1,5 +1,6 @@
 import { Card, CardContent, CardActions, Typography, Button, TextField } from '@mui/material';
 import { Product, Item } from '../types'
+import { getSpaceUntilMaxLength } from '@testing-library/user-event/dist/utils';
 
 interface ProductCardProps {
     product: Product;
@@ -15,11 +16,11 @@ export default function ProductCard({ product, item, addToCart, increaseQuantity
     };
 
     const handleIncrease = () => {
-        increaseQuantity(item || {'id': 0, 'product_id': 0, 'quantity': 0});
+        increaseQuantity(item || { 'id': 0, 'product_id': 0, 'quantity': 0 });
     };
 
     const handleDecrease = () => {
-        decreaseQuantity(item || {'id': 0, 'product_id': 0, 'quantity': 0});
+        decreaseQuantity(item || { 'id': 0, 'product_id': 0, 'quantity': 0 });
     };
 
     return (
@@ -29,9 +30,18 @@ export default function ProductCard({ product, item, addToCart, increaseQuantity
                 <Typography id={`ProductCard-${product.id}-product-name`} variant="h6" component="div">
                     {product.name}
                 </Typography>
-                <Typography id={`ProductCard-${product.id}-product-price`} variant="body2" color="text.secondary">
-                    Price: ${product.price}
-                </Typography>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: product.price_full ? 'space-evenly' : 'center', width: '100%' }}>
+                    <Typography id={`ProductCard-${product.id}-product-price`} variant="body1">
+                        ${product.price}
+                    </Typography>
+                    {product.price_full &&
+                        <s>
+                            <Typography id={`ProductCard-${product.id}-product-price-full`} variant="body1" color="text.secondary">
+                                ${product.price_full}
+                            </Typography>
+                        </s>
+                    }
+                </div>
             </CardContent>
             <CardActions style={{ justifyContent: 'center' }}>
                 {item ? (
@@ -46,7 +56,7 @@ export default function ProductCard({ product, item, addToCart, increaseQuantity
                                 height: '36px', // Set the height to match the TextField
                             }}
                             onClick={handleDecrease}
-                            // disabled={item.quantity === 1}
+                        // disabled={item.quantity === 1}
                         >
                             -
                         </Button>
@@ -92,7 +102,7 @@ export default function ProductCard({ product, item, addToCart, increaseQuantity
                             borderBottomLeftRadius: '25px',
                             borderTopRightRadius: '25px',
                             borderBottomRightRadius: '25px',
-                            width: '210px', 
+                            width: '210px',
                         }}
                     >
                         Add to cart

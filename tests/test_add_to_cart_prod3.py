@@ -4,22 +4,11 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from conftest import wait_for_element_text_change
 
-# def extract_amount(s: str) -> float:
-#     x = s.index('$') 
-#     return float(s[(x + 1):])
-
-# def extract_price(s: str) -> float:
-#     x = 
-# #     return int(...)
 
 def extract_quantity(s: str) -> int:
     l = s.split()
     x = l.index('=') 
     return int(l[x - 1])
-
-# def extract_count(s: str) -> int:
-#     x = s.index(':') 
-#     return int(s[(x + 2):])
 
 class TestSelenium:
     def test_add_to_cart(self, driver):
