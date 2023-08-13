@@ -72,6 +72,12 @@ npx cypress run
 python -m pytest -k "test_registration_form"
 ```
 
+### Jenkins
+```
+1e547ec3a3704240adec76ed3b82cc15
+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
+```
+
 ## Links
 
 ### YAML
