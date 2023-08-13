@@ -21,6 +21,7 @@ pipeline {
                     agent {
                         docker {
                             image 'python:3.9'
+                            args "-v ${WORKSPACE}:/workspace"
                         }
                     }
                     steps {
@@ -36,6 +37,7 @@ pipeline {
                     agent {
                         docker {
                             image 'node:18'
+                            args "-v ${WORKSPACE}:/workspace"
                         }
                     }
                     steps {

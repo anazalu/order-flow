@@ -21,16 +21,15 @@ services:
       - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
-  jenkins:
-    image: jenkins/jenkins:lts
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-      - .:/project
-    environment:
-      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+  # jenkins:
+  #   image: jenkins/jenkins:lts
+  #   ports:
+  #     - "8080:8080"
+  #     - "50000:50000"
+  #   volumes:
+  #     - jenkins_home:/var/jenkins_home
+  #   environment:
+  #     - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
 
-volumes:
-  jenkins_home:
+# volumes:
+#   jenkins_home:
