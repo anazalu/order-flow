@@ -14,36 +14,15 @@ pipeline {
                 checkout scm
             }
         }
-        
+
         stage('Build') {
-            parallel {
-                stage('Backend') {
-                    agent {
-                        docker {
-                            image 'python:3.9'
-                            args "-v '${WORKSPACE}':/workspace"
-                        }
-                    }
-                    steps {
-                        script {
-                            sh 'python -m pip install --upgrade pip'
-                            sh 'pip install -r back/requirements.txt'
-                            sh 'cd back && python manage.py migrate'
-                            sh 'cd back && python manage.py runserver 0.0.0.0:8000 &'
-                        }
-                    }
-                }
-                stage('Frontend') {
-                    agent {
-                        docker {
-                            image 'node:18'
-                            args "-v '${WORKSPACE}':/workspace"
-                        }
-                    }
-                    steps {
-                        sh 'cd front && npm ci'
-                        sh 'cd front && npm start &'
-                    }
+            steps {
+                script {
+                    // Build and run the Backend Docker container
+                    sh "docker run -d -v ${WORKSPACE}:/workspace -w /workspace -p 8000:8000 python:3.9 sh -c 'pip install --upgrade pip && pip install -r back/requirements.txt && cd back && python manage.py migrate && python manage.py runserver 0.0.0.0:8000 &'"
+
+                    // Build and run the Frontend Docker container
+                    sh "docker run -d -v ${WORKSPACE}:/workspace -w /workspace -p 3000:3000 node:18 sh -c 'cd front && npm ci && npm start &'"
                 }
             }
         }
