@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    def linuxWorkspace = bat(script: 'cygpath -w -l "${WORKSPACE}"', returnStdout: true).trim()
+                    def linuxWorkspace = sh(script: 'echo ${WORKSPACE} | sed -e "s|\\\\|/|g"', returnStdout: true).trim()
 
                     // Build and run the Backend Docker container
                     sh "docker run -d -v ${linuxWorkspace}:/workspace -w /workspace -p 8000:8000 python:3.9 sh -c 'pip install --upgrade pip && pip install -r back/requirements.txt && cd back && python manage.py migrate && python manage.py runserver 0.0.0.0:8000 &'"
