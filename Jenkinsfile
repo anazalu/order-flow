@@ -18,15 +18,17 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    def linuxWorkspace = bat(script: 'cygpath -w -l "${WORKSPACE}"', returnStdout: true).trim()
+
                     // Build and run the Backend Docker container
-                    sh "docker run -d -v ${WORKSPACE}:/workspace -w /workspace -p 8000:8000 python:3.9 sh -c 'pip install --upgrade pip && pip install -r back/requirements.txt && cd back && python manage.py migrate && python manage.py runserver 0.0.0.0:8000 &'"
+                    sh "docker run -d -v ${linuxWorkspace}:/workspace -w /workspace -p 8000:8000 python:3.9 sh -c 'pip install --upgrade pip && pip install -r back/requirements.txt && cd back && python manage.py migrate && python manage.py runserver 0.0.0.0:8000 &'"
 
                     // Build and run the Frontend Docker container
-                    sh "docker run -d -v ${WORKSPACE}:/workspace -w /workspace -p 3000:3000 node:18 sh -c 'cd front && npm ci && npm start &'"
+                    sh "docker run -d -v ${linuxWorkspace}:/workspace -w /workspace -p 3000:3000 node:18 sh -c 'cd front && npm ci && npm start &'"
                 }
             }
         }
-        
+
         stage('Database Setup') {
             steps {
                 script {
