@@ -27,7 +27,7 @@ pipeline {
         stage('Run API Tests (Cypress)') {
             steps {
                 script {
-                    bat "cd front && npx cypress run"
+                    bat "cd front && npm ci && npx cypress run"
                 }
             }
         }
