@@ -17,6 +17,9 @@ pipeline {
 
         stage('Start the backend') {
             steps {
+                environment { 
+                    ELECTRON_EXTRA_LAUNCH_ARGS = '--disable-gpu-sandbox'
+                }
                 script {
                     bat "docker compose up -d && cd front && npm ci && npx cypress run"
                     // sleep 5
