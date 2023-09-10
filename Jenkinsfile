@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     bat "docker compose up -d"
-                    sleep 10
+                    sleep 5
                 }
             }
         }
@@ -27,7 +27,9 @@ pipeline {
         stage('Run API Tests (Cypress)') {
             steps {
                 script {
-                    bat "cd '${WORKSPACE}' && npm start && npx cypress run"
+                    bat "cd front"
+                    bat "npm start"
+                    bat "npx cypress run"
                 }
             }
         }
