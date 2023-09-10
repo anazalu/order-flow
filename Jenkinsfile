@@ -27,7 +27,7 @@ pipeline {
         stage('Run API Tests (Cypress)') {
             steps {
                 script {
-                    bat "cd front && npm start && npx cypress run"
+                    bat "cd front && npx cypress run"
                 }
             }
         }
@@ -35,7 +35,7 @@ pipeline {
         stage('Run UI Tests (pytest/Selenium)') {
             steps {
                 script {
-                    bat 'pytest .'
+                    bat 'cd front && npm start && cd .. && pytest .'
                 }
             }
         }
