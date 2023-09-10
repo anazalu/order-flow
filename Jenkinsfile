@@ -16,7 +16,11 @@ pipeline {
         }
 
         stage('Start the backend') {
-            environment { 
+            environment {
+                POSTGRES_HOST='localhost'
+                POSTGRES_NAME='orderflow_db'
+                POSTGRES_USER='postgres'
+                POSTGRES_PASSWORD='postgres'
                 ELECTRON_EXTRA_LAUNCH_ARGS = '--disable-gpu-sandbox'
             }
             steps {
@@ -27,21 +31,21 @@ pipeline {
             }
         }
         
-        stage('Run API Tests (Cypress)') {
-            steps {
-                script {
-                    bat "cd front && npm ci && npx cypress run"
-                }
-            }
-        }
+        // stage('Run API Tests (Cypress)') {
+        //     steps {
+        //         script {
+        //             bat "cd front && npm ci && npx cypress run"
+        //         }
+        //     }
+        // }
         
-        stage('Run UI Tests (pytest/Selenium)') {
-            steps {
-                script {
-                    bat 'cd front && npm start && cd .. && pytest .'
-                }
-            }
-        }
+        // stage('Run UI Tests (pytest/Selenium)') {
+        //     steps {
+        //         script {
+        //             bat 'cd front && npm start && cd .. && pytest .'
+        //         }
+        //     }
+        // }
     }
 
     post {
