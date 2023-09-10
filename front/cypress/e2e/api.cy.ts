@@ -16,7 +16,7 @@ describe('API Tests', () => {
     })
       .then((response) => {
         if (response.status != 201 && response.status != 400) { // HTTP 400 is returned if the user already exists (note the 'failOnStatusCode: false' above)
-          throw new Error('User registration failed');
+          throw new Error('User registration failed (status code ' + response.status + ')');
         }
 
         // user created successfully (or already exists in the database), obtain access token
