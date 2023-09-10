@@ -18,8 +18,8 @@ pipeline {
         stage('Start the backend') {
             steps {
                 script {
-                    bat "docker compose up -d"
-                    sleep 5
+                    bat "docker compose up -d && cd front && npm ci && npx cypress run"
+                    // sleep 5
                 }
             }
         }
