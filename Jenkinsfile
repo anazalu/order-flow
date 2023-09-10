@@ -18,7 +18,8 @@ pipeline {
         stage('Start the backend') {
             steps {
                 script {
-                    bat "docker compose up"
+                    bat "docker compose up -d"
+                    sleep 10
                 }
             }
         }
@@ -38,6 +39,12 @@ pipeline {
                     bat 'pytest .'
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            bat 'docker compose down'
         }
     }
 }
