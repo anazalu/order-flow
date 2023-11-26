@@ -121,14 +121,14 @@ For an entry-level test automation developer/engineer specializing in Python (py
 It's worth noting that these are foundational skills expected from an entry-level test automation developer/engineer. The specific skill set may vary based on the organization, project requirements, and technology stack. As you gain experience and work on real-world projects, you will continue to enhance your skills and broaden your expertise in test automation.
 
 
-Python, TypeScript
-Selenium, Cypress
-HTTP, REST, Postman
-HTML, CSS, React
-Git, GitHub
-Linux
-Docker
-GitHub Actions, Jenkins(?)
-Jira(?)
-testing theory, making test plans
-SQL, Postgres
+- Python, TypeScript
+- Selenium, Cypress
+- HTTP, REST, Postman
+- HTML, CSS, React
+- Git, GitHub
+- Linux
+- Docker
+- GitHub Actions, Jenkins(?)
+- Jira(??)
+- testing theory, making test plans
+- SQL, Postgres
