@@ -41,6 +41,7 @@ docker run --name my-mysql-container -d my-mysql-image
 docker exec -it 22e79424cbac sh
 docker compose up
 docker compose up --build
+docker compose down
 ```
 
 ### Postgres
