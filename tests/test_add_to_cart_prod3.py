@@ -7,7 +7,7 @@ from conftest import wait_for_element_text_change
 
 def extract_quantity(s: str) -> int:
     l = s.split()
-    x = l.index('=') 
+    x = l.index('=')
     return int(l[x - 1])
 
 class TestSelenium:

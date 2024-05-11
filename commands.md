@@ -70,7 +70,14 @@ npx cypress run
 
 ### pytest
 ```
+python -m pytest
+python -m pytest -k "test_discount_prod4"
 python -m pytest -k "test_registration_form"
+```
+
+### Selenium
+```
+Selenium uses chromedriver.exe. The path to this executable must be in the PATH environment variable. Chrome must be at a standard path. When Chrome is updated, a new version of ChromeDriver must be downloaded and saved, PATH updated.
 ```
 
 ### Jenkins

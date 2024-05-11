@@ -1,19 +1,24 @@
 import math
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from conftest import wait_for_element_text_change
 
+
 def extract_amount(s: str) -> float:
-    x = s.index('$') 
+    x = s.index('$')
     return float(s[(x + 1):])
+
 
 class TestSelenium:
     def test_price_full(self, driver):
         # ProductCard, product with full price and regular [discount] price
-        price_full = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, "ProductCard-4-product-price-full")))
-        assert price_full.is_displayed()
+        try:
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, "ProductCard-4-product-price-full")))
+        except TimeoutException:
+            assert False, "Element ProductCard-4-product-price-full is not visible."
 
         # ProductCard, product without full price (with regular price only)
         price_full_elements = driver.find_elements(By.ID, "ProductCard-5-product-price-full")

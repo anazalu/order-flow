@@ -81,4 +81,3 @@ The workflow has the following steps:
 - Start frontend
 - Run UI Tests (pytest/Selenium)
 
-- https://laughing-space-zebra-gj77w4x4vgxh964x.github.dev/
